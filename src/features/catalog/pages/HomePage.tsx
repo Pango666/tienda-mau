@@ -77,7 +77,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-6 lg:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          <div className="lg:col-span-7 flex flex-col justify-between bg-surface-container-low p-6 md:p-10 lg:p-12 shadow-xl relative overflow-hidden">
+          <div className="lg:col-span-7 flex flex-col justify-center gap-8 bg-surface-container-low p-6 md:p-10 lg:p-12 shadow-xl relative overflow-hidden">
             <div className="absolute right-4 top-4 font-label-mono text-[90px] text-surface-container-highest/20 font-black leading-none select-none pointer-events-none -z-0">01</div>
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 bg-surface-container-highest px-3 py-1 text-on-surface-variant font-label-mono text-label-mono mb-6">
@@ -109,7 +109,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+            <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <Link
                 to={latestProduct ? `/producto/${latestProduct.id}` : '#'}
                 className={`bg-primary-container hover:bg-on-surface hover:text-surface text-on-primary-container font-headline-sm text-headline-sm px-8 py-4 uppercase font-bold tracking-tight text-center transition-colors shadow-md flex items-center justify-center gap-3 group ${!latestProduct ? 'opacity-50 pointer-events-none' : ''}`}

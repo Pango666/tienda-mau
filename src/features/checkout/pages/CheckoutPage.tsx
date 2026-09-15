@@ -65,7 +65,7 @@ export default function CheckoutPage() {
           // CHECKOUT PROTOCOL
         </span>
       </div>
-      <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-extrabold text-on-surface uppercase tracking-tight mb-8">
+      <h1 className="font-headline-md text-4xl md:text-5xl font-extrabold text-on-surface uppercase tracking-tight mb-8">
         CONFIRMAR PEDIDO
       </h1>
 

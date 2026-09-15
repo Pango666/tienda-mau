@@ -130,6 +130,86 @@ export async function deleteProduct(id: string): Promise<boolean> {
   return true
 }
 
+// ─── Categories ───
+
+export async function createCategory(category: {
+  name: string
+  slug: string
+  description?: string
+}): Promise<boolean> {
+  const { error } = await supabase
+    .from('categories')
+    .insert(category)
+
+  if (error) {
+    console.error('Error creating category:', error)
+    return false
+  }
+  return true
+}
+
+export async function deleteCategory(id: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('categories')
+    .delete()
+    .eq('id', id)
+
+  if (error) {
+    console.error('Error deleting category:', error)
+    return false
+  }
+  return true
+}
+
+// ─── Product Images ───
+
+export async function uploadProductImage(file: File): Promise<string | null> {
+  const fileExt = file.name.split('.').pop()
+  const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`
+  const filePath = `${fileName}`
+
+  const { error: uploadError } = await supabase.storage
+    .from('product-images')
+    .upload(filePath, file)
+
+  if (uploadError) {
+    console.error('Error uploading image:', uploadError)
+    return null
+  }
+
+  const { data } = supabase.storage.from('product-images').getPublicUrl(filePath)
+  return data.publicUrl
+}
+
+export async function createProductImage(productId: string, imageUrl: string, isPrimary: boolean = true): Promise<boolean> {
+  const { error } = await supabase
+    .from('product_images')
+    .insert({
+      product_id: productId,
+      image_url: imageUrl,
+      is_primary: isPrimary
+    })
+
+  if (error) {
+    console.error('Error saving image record:', error)
+    return false
+  }
+  return true
+}
+
+export async function deleteProductImage(imageId: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('product_images')
+    .delete()
+    .eq('id', imageId)
+
+  if (error) {
+    console.error('Error deleting image record:', error)
+    return false
+  }
+  return true
+}
+
 // ─── Variants ───
 
 export async function createVariant(variant: {

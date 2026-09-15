@@ -3,18 +3,29 @@ import {
   fetchDashboardStats,
   fetchAllProducts,
   createProduct,
+  updateProduct,
   deleteProduct,
   updateVariantStock,
   createVariant,
+  createCategory,
+  deleteCategory,
+  uploadProductImage,
+  createProductImage,
   type DashboardStats,
 } from '../services/adminService'
-import type { ProductWithDetails } from '../../../types'
+import { fetchCategories } from '../../catalog/services/catalogService'
+import type { ProductWithDetails, Category } from '../../../types'
 
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null)
   const [products, setProducts] = useState<ProductWithDetails[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<'inventory' | 'categories'>('inventory')
+
+  // Modals
   const [showAddModal, setShowAddModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState<ProductWithDetails | null>(null)
   const [showVariantModal, setShowVariantModal] = useState<string | null>(null)
   const [editingStock, setEditingStock] = useState<{ variantId: string; stock: number } | null>(null)
 
@@ -24,6 +35,15 @@ export default function AdminDashboardPage() {
     description: '',
     material: '',
     base_price: 0,
+    category_id: '',
+  })
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
+
+  // New category form
+  const [newCategory, setNewCategory] = useState({
+    name: '',
+    slug: '',
   })
 
   // New variant form
@@ -36,12 +56,14 @@ export default function AdminDashboardPage() {
 
   const loadData = useCallback(async () => {
     setLoading(true)
-    const [statsData, productsData] = await Promise.all([
+    const [statsData, productsData, categoriesData] = await Promise.all([
       fetchDashboardStats(),
       fetchAllProducts(),
+      fetchCategories(),
     ])
     setStats(statsData)
     setProducts(productsData)
+    setCategories(categoriesData)
     setLoading(false)
   }, [])
 
@@ -52,19 +74,72 @@ export default function AdminDashboardPage() {
   async function handleCreateProduct(e: React.FormEvent) {
     e.preventDefault()
     if (!newProduct.title || !newProduct.base_price) return
+    setIsUploading(true)
 
     const id = await createProduct({
       title: newProduct.title,
       description: newProduct.description || undefined,
       material: newProduct.material || undefined,
       base_price: newProduct.base_price,
+      category_id: newProduct.category_id || undefined,
     })
 
     if (id) {
+      if (imageFile) {
+        const imageUrl = await uploadProductImage(imageFile)
+        if (imageUrl) {
+          await createProductImage(id, imageUrl, true)
+        }
+      }
       setShowAddModal(false)
-      setNewProduct({ title: '', description: '', material: '', base_price: 0 })
+      setNewProduct({ title: '', description: '', material: '', base_price: 0, category_id: '' })
+      setImageFile(null)
       await loadData()
     }
+    setIsUploading(false)
+  }
+
+  async function handleEditProduct(e: React.FormEvent) {
+    e.preventDefault()
+    if (!showEditModal) return
+    setIsUploading(true)
+
+    const ok = await updateProduct(showEditModal.id, {
+      title: showEditModal.title,
+      description: showEditModal.description || '',
+      material: showEditModal.material || '',
+      base_price: showEditModal.base_price,
+      category_id: showEditModal.category_id || undefined,
+    })
+
+    if (ok) {
+      if (imageFile) {
+        const imageUrl = await uploadProductImage(imageFile)
+        if (imageUrl) {
+          await createProductImage(showEditModal.id, imageUrl, true)
+        }
+      }
+      setShowEditModal(null)
+      setImageFile(null)
+      await loadData()
+    }
+    setIsUploading(false)
+  }
+
+  async function handleCreateCategory(e: React.FormEvent) {
+    e.preventDefault()
+    if (!newCategory.name || !newCategory.slug) return
+    const ok = await createCategory({ name: newCategory.name, slug: newCategory.slug })
+    if (ok) {
+      setNewCategory({ name: '', slug: '' })
+      await loadData()
+    }
+  }
+
+  async function handleDeleteCategory(id: string) {
+    if (!confirm('¿Seguro que deseas eliminar esta categoría?')) return
+    const ok = await deleteCategory(id)
+    if (ok) await loadData()
   }
 
   async function handleDeleteProduct(id: string) {
@@ -142,8 +217,24 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
+      {/* Tabs */}
+      <div className="flex gap-4 px-6 pt-4 bg-surface-container-low border-b border-outline-variant/20">
+        <button
+          className={`pb-3 font-headline-sm text-body-md font-bold uppercase tracking-wider border-b-2 transition-colors ${activeTab === 'inventory' ? 'border-primary text-primary' : 'border-transparent text-on-surface-variant hover:text-on-surface'}`}
+          onClick={() => setActiveTab('inventory')}
+        >
+          INVENTARIO Y PRODUCTOS
+        </button>
+        <button
+          className={`pb-3 font-headline-sm text-body-md font-bold uppercase tracking-wider border-b-2 transition-colors ${activeTab === 'categories' ? 'border-primary text-primary' : 'border-transparent text-on-surface-variant hover:text-on-surface'}`}
+          onClick={() => setActiveTab('categories')}
+        >
+          CATEGORÍAS DE TIENDA
+        </button>
+      </div>
+
       {/* KPI Cards */}
-      {stats && (
+      {activeTab === 'inventory' && stats && (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
           {[
             {
@@ -180,15 +271,16 @@ export default function AdminDashboardPage() {
         </div>
       )}
 
-      {/* Inventory Table */}
-      <div className="bg-surface-container-low shadow-md">
-        <div className="p-5 flex items-center justify-between border-b border-outline-variant/20">
-          <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-[20px]">inventory_2</span>
-            <h2 className="font-headline-sm text-headline-sm font-bold text-on-surface uppercase">INVENTARIO ACTIVO</h2>
+      {/* Inventory Section */}
+      {activeTab === 'inventory' && (
+        <div className="bg-surface-container-low shadow-md">
+          <div className="p-5 flex items-center justify-between border-b border-outline-variant/20">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-primary text-[20px]">inventory_2</span>
+              <h2 className="font-headline-sm text-headline-sm font-bold text-on-surface uppercase">INVENTARIO ACTIVO</h2>
+            </div>
+            <span className="font-label-mono text-label-mono text-outline">{products.length} PRODUCTOS</span>
           </div>
-          <span className="font-label-mono text-label-mono text-outline">{products.length} PRODUCTOS</span>
-        </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -302,6 +394,13 @@ export default function AdminDashboardPage() {
                       <td className="p-3 text-center">
                         <div className="flex items-center justify-center gap-2">
                           <button
+                            onClick={() => setShowEditModal(product)}
+                            className="p-1 text-outline hover:text-primary transition-colors"
+                            title="Editar Producto"
+                          >
+                            <span className="material-symbols-outlined text-[18px]">edit</span>
+                          </button>
+                          <button
                             onClick={() => handleDeleteProduct(product.id)}
                             className="p-1 text-outline hover:text-error transition-colors"
                             title="Eliminar"
@@ -318,6 +417,94 @@ export default function AdminDashboardPage() {
           </table>
         </div>
       </div>
+      )}
+
+      {/* Categories Section */}
+      {activeTab === 'categories' && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 bg-surface-container-low shadow-md">
+            <div className="p-5 flex items-center justify-between border-b border-outline-variant/20">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary text-[20px]">category</span>
+                <h2 className="font-headline-sm text-headline-sm font-bold text-on-surface uppercase">CATEGORÍAS REGISTRADAS</h2>
+              </div>
+              <span className="font-label-mono text-label-mono text-outline">{categories.length} CATEGORÍAS</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-surface-container">
+                    <th className="p-3 text-left font-label-mono text-label-mono text-outline uppercase tracking-wider">NOMBRE</th>
+                    <th className="p-3 text-left font-label-mono text-label-mono text-outline uppercase tracking-wider">SLUG (URL)</th>
+                    <th className="p-3 text-center font-label-mono text-label-mono text-outline uppercase tracking-wider">ACCIONES</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categories.map(cat => (
+                    <tr key={cat.id} className="border-b border-outline-variant/10 hover:bg-surface-container/50 transition-colors">
+                      <td className="p-3 font-headline-sm text-body-sm font-bold text-on-surface uppercase">{cat.name}</td>
+                      <td className="p-3 font-label-mono text-body-sm text-on-surface-variant">{cat.slug}</td>
+                      <td className="p-3 text-center">
+                        <button
+                          onClick={() => handleDeleteCategory(cat.id)}
+                          className="p-1 text-outline hover:text-error transition-colors"
+                          title="Eliminar Categoría"
+                        >
+                          <span className="material-symbols-outlined text-[18px]">delete</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {categories.length === 0 && (
+                    <tr>
+                      <td colSpan={3} className="p-8 text-center font-label-mono text-body-md text-on-surface-variant">
+                        NO HAY CATEGORÍAS REGISTRADAS
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div className="bg-surface-container-low shadow-md p-6 flex flex-col gap-6 h-fit">
+            <div>
+              <span className="font-label-mono text-label-mono text-primary uppercase font-bold tracking-widest">// NUEVO REGISTRO</span>
+              <h3 className="font-headline-md text-headline-sm text-on-surface uppercase font-bold">AÑADIR CATEGORÍA</h3>
+            </div>
+            <form onSubmit={handleCreateCategory} className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">NOMBRE *</label>
+                <input
+                  type="text"
+                  value={newCategory.name}
+                  onChange={e => setNewCategory(c => ({ ...c, name: e.target.value, slug: e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, '-') }))}
+                  required
+                  placeholder="Ej: Poleras"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">SLUG *</label>
+                <input
+                  type="text"
+                  value={newCategory.slug}
+                  onChange={e => setNewCategory(c => ({ ...c, slug: e.target.value }))}
+                  required
+                  placeholder="ej-poleras"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-bold uppercase tracking-tight hover:bg-white hover:text-surface transition-all shadow-md mt-2"
+              >
+                GUARDAR CATEGORÍA
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Add Product Modal */}
       {showAddModal && (
@@ -334,17 +521,33 @@ export default function AdminDashboardPage() {
             </div>
 
             <form onSubmit={handleCreateProduct} className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">TÍTULO *</label>
-                <input
-                  type="text"
-                  value={newProduct.title}
-                  onChange={e => setNewProduct(p => ({ ...p, title: e.target.value }))}
-                  required
-                  placeholder="NOMBRE DEL PRODUCTO"
-                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">TÍTULO *</label>
+                  <input
+                    type="text"
+                    value={newProduct.title}
+                    onChange={e => setNewProduct(p => ({ ...p, title: e.target.value }))}
+                    required
+                    placeholder="NOMBRE DEL PRODUCTO"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">CATEGORÍA</label>
+                  <select
+                    value={newProduct.category_id}
+                    onChange={e => setNewProduct(p => ({ ...p, category_id: e.target.value }))}
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase"
+                  >
+                    <option value="">-- SELECCIONAR --</option>
+                    {categories.map(c => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
+
               <div className="flex flex-col gap-2">
                 <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">DESCRIPCIÓN</label>
                 <textarea
@@ -380,11 +583,132 @@ export default function AdminDashboardPage() {
                   />
                 </div>
               </div>
+              <div className="flex flex-col gap-2 mt-2">
+                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">IMAGEN DEL PRODUCTO</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={e => setImageFile(e.target.files?.[0] || null)}
+                  className="font-label-mono text-body-sm text-on-surface file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-sm file:font-bold file:bg-primary-container file:text-on-primary-container hover:file:bg-white hover:file:text-surface transition-all cursor-pointer"
+                />
+              </div>
               <button
                 type="submit"
-                className="w-full py-3 bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-bold uppercase tracking-tight hover:bg-white hover:text-surface transition-all shadow-md"
+                disabled={isUploading}
+                className="w-full py-3 bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-bold uppercase tracking-tight hover:bg-white hover:text-surface transition-all shadow-md mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
-                CREAR PRODUCTO
+                {isUploading ? (
+                  <>
+                    <span className="material-symbols-outlined animate-spin text-[20px]">autorenew</span>
+                    GUARDANDO...
+                  </>
+                ) : (
+                  'CREAR PRODUCTO'
+                )}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Product Modal */}
+      {showEditModal && (
+        <div className="fixed inset-0 z-50 bg-surface-container-lowest/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-surface-container-high max-w-lg w-full p-6 md:p-8 flex flex-col gap-6 shadow-2xl overflow-y-auto max-h-[90vh]">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="font-label-mono text-label-mono text-primary uppercase font-bold tracking-widest">// EDICIÓN DE PRODUCTO</span>
+                <h3 className="font-headline-md text-headline-md text-on-surface uppercase font-bold">EDITAR PIEZA</h3>
+              </div>
+              <button className="p-2 bg-surface-container text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors" onClick={() => setShowEditModal(null)} type="button">
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
+            <form onSubmit={handleEditProduct} className="flex flex-col gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">TÍTULO *</label>
+                  <input
+                    type="text"
+                    value={showEditModal.title}
+                    onChange={e => setShowEditModal(p => p ? { ...p, title: e.target.value } : null)}
+                    required
+                    placeholder="NOMBRE DEL PRODUCTO"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">CATEGORÍA</label>
+                  <select
+                    value={showEditModal.category_id || ''}
+                    onChange={e => setShowEditModal(p => p ? { ...p, category_id: e.target.value } : null)}
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase"
+                  >
+                    <option value="">-- SELECCIONAR --</option>
+                    {categories.map(c => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">DESCRIPCIÓN</label>
+                <textarea
+                  value={showEditModal.description || ''}
+                  onChange={e => setShowEditModal(p => p ? { ...p, description: e.target.value } : null)}
+                  placeholder="DESCRIPCIÓN DEL PRODUCTO"
+                  rows={3}
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container resize-none"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">MATERIAL</label>
+                  <input
+                    type="text"
+                    value={showEditModal.material || ''}
+                    onChange={e => setShowEditModal(p => p ? { ...p, material: e.target.value } : null)}
+                    placeholder="EJ: ALGODÓN 100%"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">PRECIO (Bs.) *</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    value={showEditModal.base_price || ''}
+                    onChange={e => setShowEditModal(p => p ? { ...p, base_price: Number(e.target.value) } : null)}
+                    required
+                    placeholder="0.00"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 mt-2">
+                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">NUEVA IMAGEN (Reemplazar)</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={e => setImageFile(e.target.files?.[0] || null)}
+                  className="font-label-mono text-body-sm text-on-surface file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-sm file:font-bold file:bg-primary-container file:text-on-primary-container hover:file:bg-white hover:file:text-surface transition-all cursor-pointer"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={isUploading}
+                className="w-full py-3 bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-bold uppercase tracking-tight hover:bg-white hover:text-surface transition-all shadow-md mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {isUploading ? (
+                  <>
+                    <span className="material-symbols-outlined animate-spin text-[20px]">autorenew</span>
+                    GUARDANDO...
+                  </>
+                ) : (
+                  'GUARDAR CAMBIOS'
+                )}
               </button>
             </form>
           </div>

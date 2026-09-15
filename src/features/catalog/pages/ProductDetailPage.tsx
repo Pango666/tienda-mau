@@ -161,7 +161,7 @@ export default function ProductDetailPage() {
                 <div className="flex items-center gap-2">
                   <span className="font-label-mono text-label-mono text-primary uppercase font-bold tracking-widest">// DROP EXCLUSIVO ARCHIVO 2025</span>
                 </div>
-                <h1 className="font-headline-lg text-headline-lg font-extrabold uppercase text-on-surface tracking-tighter leading-tight">
+                <h1 className="font-headline-md text-headline-md md:text-5xl font-extrabold uppercase text-on-surface tracking-tighter leading-tight">
                   {product.title}
                 </h1>
               </div>
@@ -169,11 +169,8 @@ export default function ProductDetailPage() {
               {/* Price */}
               <div className="bg-surface-container p-4 flex items-baseline justify-between">
                 <div className="flex items-baseline gap-3">
-                  <span className="font-headline-lg text-headline-lg font-extrabold text-on-surface tracking-tight">Bs. {product.base_price.toFixed(2)}</span>
+                  <span className="font-headline-md text-headline-md md:text-4xl font-extrabold text-on-surface tracking-tight">Bs. {product.base_price.toFixed(2)}</span>
                   <span className="font-label-mono text-body-sm text-tertiary uppercase">BOB</span>
-                </div>
-                <div className="flex flex-col items-end">
-                  <span className="bg-surface-container-high px-2 py-0.5 font-label-mono text-[10px] text-primary uppercase tracking-wider font-bold">IMPUESTOS INCLUIDOS</span>
                 </div>
               </div>
 

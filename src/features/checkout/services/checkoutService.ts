@@ -5,13 +5,15 @@ const WHATSAPP_NUMBER = '59170000000'
 
 export async function processCheckout(
   customerName: string,
-  deliveryPoint: string,
+  customerPhone: string,
+  deliveryPointId: string,
   items: CartItem[],
   totalAmount: number
 ): Promise<string> {
   // 1. Validate
   if (!customerName.trim()) throw new Error('El nombre del cliente es obligatorio')
-  if (!deliveryPoint.trim()) throw new Error('Selecciona un punto de entrega')
+  if (!customerPhone.trim()) throw new Error('El teléfono es obligatorio')
+  if (!deliveryPointId) throw new Error('Selecciona un punto de entrega')
   if (items.length === 0) throw new Error('El carrito está vacío')
 
   // 2. INSERT order → get order_id
@@ -19,8 +21,10 @@ export async function processCheckout(
     .from('orders')
     .insert({
       customer_name: customerName.trim(),
+      customer_phone: customerPhone.trim(),
+      delivery_point_id: deliveryPointId,
       total_amount: totalAmount,
-      status: 'pendiente',
+      status: 'pending',
     })
     .select('id')
     .single()
@@ -29,11 +33,12 @@ export async function processCheckout(
     throw new Error('Error al registrar el pedido: ' + (orderError?.message || 'Unknown'))
   }
 
-  // 3. INSERT order_items in bulk
+  // 3. INSERT order_items in bulk with unit_price
   const orderItems = items.map(item => ({
     order_id: order.id,
     variant_id: item.variant_id,
     quantity: item.quantity,
+    unit_price: item.price,
   }))
 
   const { error: itemsError } = await supabase
@@ -52,7 +57,7 @@ export async function processCheckout(
     )
     .join('\n')
 
-  const message = `Hola, quiero confirmar mi pedido #${order.id}.\nDetalle:\n${detail}\nTotal: Bs.${totalAmount.toFixed(2)}\nEntrega para: ${customerName.trim()} en ${deliveryPoint}.`
+  const message = `Hola, quiero confirmar mi pedido #${order.id.slice(0, 8)}.\nCliente: ${customerName.trim()}\nTeléfono: ${customerPhone.trim()}\nDetalle:\n${detail}\nTotal: Bs.${totalAmount.toFixed(2)}`
 
   // 5. Open WhatsApp in new tab
   const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`

@@ -24,7 +24,7 @@ export default function CatalogPage() {
               <span className="inline-block w-2 h-2 bg-primary-container"></span>
               <span className="font-label-mono text-label-mono text-primary uppercase">CATALOG PROTOCOL // SYSTEM 04</span>
             </div>
-            <h1 className="font-headline-lg text-headline-lg font-bold text-on-surface uppercase tracking-tight">HEADWEAR ARCHIVE</h1>
+            <h1 className="font-headline-lg text-headline-lg font-bold text-on-surface uppercase tracking-tight">APPAREL ARCHIVE</h1>
           </div>
           <div className="flex items-center gap-3 bg-surface-container px-3 py-2">
             <span className="material-symbols-outlined text-primary-container text-sm">inventory_2</span>
@@ -37,7 +37,7 @@ export default function CatalogPage() {
       <section className="w-full bg-surface-container-low px-4 md:px-margin-tablet lg:px-margin-desktop py-3">
         <div className="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <span className="font-label-mono text-label-mono text-primary font-bold">[ {products.length} GORRAS ENCONTRADAS ]</span>
+            <span className="font-label-mono text-label-mono text-primary font-bold">[ {products.length} PRENDAS ENCONTRADAS ]</span>
             <span className="hidden sm:inline text-secondary-container font-label-mono text-xs">/</span>
             <span className="hidden sm:inline font-label-mono text-label-mono text-on-surface-variant">DROP LIMITADO ACTIVO</span>
           </div>
@@ -89,11 +89,11 @@ export default function CatalogPage() {
             {/* Cap Type */}
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
-                <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">TIPO DE GORRA</span>
+                <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">TIPO DE PRENDA</span>
                 <span className="font-label-mono text-[10px] text-on-surface-variant">SILUETA</span>
               </div>
               <div className="flex flex-col gap-2 font-label-mono text-body-sm">
-                {['Snapback', 'Trucker', 'Dad Hat', 'Visera Plana', 'Camp Cap'].map((type, idx) => (
+                {['Poleras', 'Hoodies', 'Pantalones', 'Chaquetas', 'Accesorios'].map((type, idx) => (
                   <label key={type} className="flex items-center justify-between cursor-pointer group bg-surface-container/50 hover:bg-surface-container px-2 py-1.5 transition-colors">
                     <span className="flex items-center gap-2">
                       <input className="w-4 h-4 rounded-none accent-primary-container bg-surface-container cursor-pointer" type="checkbox" defaultChecked={idx === 0} />

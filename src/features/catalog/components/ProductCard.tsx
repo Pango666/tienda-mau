@@ -25,7 +25,7 @@ export default function ProductCard({ product, onQuickAdd }: ProductCardProps) {
         />
         <div className="absolute top-3 left-3 flex flex-col gap-1">
           <span className="bg-surface-container-lowest text-primary font-label-mono text-[10px] px-2 py-0.5 uppercase tracking-widest font-bold">
-            GORRA
+            PRENDA
           </span>
           {totalStock <= 5 && totalStock > 0 && (
             <span className="bg-primary-container text-on-primary-container font-label-mono text-[9px] px-1.5 py-0.5 font-bold uppercase tracking-wider">

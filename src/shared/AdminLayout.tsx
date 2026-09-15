@@ -1,20 +1,24 @@
-import { Outlet, Link, useLocation } from 'react-router-dom'
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../features/admin/context/AuthContext'
 
 const LOGO_URL =
   'https://lh3.googleusercontent.com/aida/AEtjO1UYq7ZlpuPFWfKgRhVlscqZTRODPH7iHddG6Vl79gQOjkgRo1Ot52UoL-xpKixDA710r77IgzI76vl7BgAEFjszMoJz7zycf1h0Eu0nBXbnpSs7m60YHFM3liThne8uhEBBvaN_5_ig2J9GtcCYzkRQZ0U3bjtILbh75U9fdG3WFLlivx8BxEr3ZkJhTjhMOngXWVka4ZSVn9v55o0IBt37NckuDCXXL-0fbBsOKPzUTJTe0epblGdCSw'
 
-const PROFILE_URL =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDfDXOaAER6vXJVlJ4nHTGfTyy0E0K9d_WftF2rvLk5-ThJrAW6xTDXu44X2H-Kfv2GAG-EU3gmk_ISMoCjywGobCIcIYYUYULFvc9gIVooyoDDrQP3d9OPahGQs8m3o7QDNbNF__98s7IhHiMa2TwCFfMmVcaUGggTD0PGMilTzNXvqMFeNvBUHnAen8zgMqZ5z9Uu6tw13VmA7KqNabnxPKfmgmiPcTEgni5L3OvQih6gljpyeuTS'
-
 const SIDEBAR_LINKS = [
   { path: '/admin', label: 'VISTA GENERAL', icon: 'dashboard' },
-  { path: '/catalogo', label: 'INVENTARIO / DROPS', icon: 'inventory_2' },
-  { path: '/puntos-de-entrega', label: 'LOGÍSTICA / PICKUPS', icon: 'local_shipping' },
-  { path: '/faq-contacto', label: 'TICKETS CLIENTE', icon: 'support_agent' },
+  { path: '/admin/pedidos', label: 'PEDIDOS', icon: 'receipt_long' },
+  { path: '/admin/puntos-entrega', label: 'PUNTOS DE ENTREGA', icon: 'local_shipping' },
 ]
 
 export default function AdminLayout() {
   const location = useLocation()
+  const navigate = useNavigate()
+  const { user, logout } = useAuth()
+
+  async function handleLogout() {
+    await logout()
+    navigate('/admin/login', { replace: true })
+  }
 
   return (
     <div className="min-h-screen bg-surface font-body-md text-on-surface antialiased">
@@ -73,13 +77,24 @@ export default function AdminLayout() {
           </Link>
         </nav>
 
-        {/* User */}
-        <div className="p-4 border-t border-outline-variant/30 flex items-center gap-3 bg-surface-container-low">
-          <img alt="Profile" className="w-8 h-8 rounded-none object-cover border border-outline-variant/40" src={PROFILE_URL} />
-          <div className="flex flex-col overflow-hidden">
-            <span className="font-label-mono text-label-mono uppercase truncate text-on-surface">ADMIN_ROOT</span>
-            <span className="font-label-mono text-[9px] text-outline truncate">SESSION: #8841-SEC</span>
+        {/* User + Logout */}
+        <div className="p-4 border-t border-outline-variant/30 bg-surface-container-low">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-primary-container flex items-center justify-center">
+              <span className="material-symbols-outlined text-on-primary-container text-[18px]">person</span>
+            </div>
+            <div className="flex flex-col overflow-hidden">
+              <span className="font-label-mono text-label-mono uppercase truncate text-on-surface">ADMIN</span>
+              <span className="font-label-mono text-[9px] text-outline truncate">{user?.email || 'SESSION ACTIVE'}</span>
+            </div>
           </div>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-surface-container hover:bg-error-container text-on-surface-variant hover:text-on-error-container font-label-mono text-[11px] uppercase tracking-wider transition-all"
+          >
+            <span className="material-symbols-outlined text-[16px]">logout</span>
+            CERRAR SESIÓN
+          </button>
         </div>
       </aside>
 
@@ -109,13 +124,6 @@ export default function AdminLayout() {
               type="button"
             >
               <span className="material-symbols-outlined text-[20px]">notifications</span>
-            </button>
-            <button
-              aria-label="Settings"
-              className="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors border border-outline-variant/20"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[20px]">settings</span>
             </button>
           </div>
         </header>

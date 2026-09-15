@@ -1,31 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCartContext } from '../../cart/context/CartContext'
 import { processCheckout } from '../services/checkoutService'
-
-const DELIVERY_POINTS = [
-  'El Prado',
-  'San Miguel',
-  'Sopocachi',
-  'Calacoto',
-  'Miraflores',
-]
+import { fetchDeliveryPoints } from '../../catalog/services/catalogService'
+import type { DeliveryPoint } from '../../../types'
 
 export default function CheckoutPage() {
   const { items, updateQuantity, removeItem, clearCart, totalAmount } = useCartContext()
   const [customerName, setCustomerName] = useState('')
-  const [deliveryPoint, setDeliveryPoint] = useState('')
+  const [customerPhone, setCustomerPhone] = useState('')
+  const [deliveryPointId, setDeliveryPointId] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState('')
+  const [deliveryPoints, setDeliveryPoints] = useState<DeliveryPoint[]>([])
 
   const total = totalAmount()
+
+  useEffect(() => {
+    fetchDeliveryPoints().then(setDeliveryPoints)
+  }, [])
 
   async function handleCheckout() {
     setError('')
     setIsProcessing(true)
 
     try {
-      await processCheckout(customerName, deliveryPoint, items, total)
-      // 6. Clear cart after successful checkout
+      await processCheckout(customerName, customerPhone, deliveryPointId, items, total)
       clearCart()
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Error al procesar el pedido')
@@ -165,21 +164,35 @@ export default function CheckoutPage() {
               />
             </div>
 
+            {/* Phone input */}
+            <div className="flex flex-col gap-2">
+              <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">
+                02 // TELÉFONO / WHATSAPP:
+              </label>
+              <input
+                type="tel"
+                value={customerPhone}
+                onChange={e => setCustomerPhone(e.target.value)}
+                placeholder="+591 7XXXXXXX"
+                className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+              />
+            </div>
+
             {/* Delivery point select */}
             <div className="flex flex-col gap-2">
               <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">
-                02 // PUNTO DE ENTREGA:
+                03 // PUNTO DE ENTREGA:
               </label>
               <div className="relative">
                 <select
-                  value={deliveryPoint}
-                  onChange={e => setDeliveryPoint(e.target.value)}
+                  value={deliveryPointId}
+                  onChange={e => setDeliveryPointId(e.target.value)}
                   className="w-full appearance-none bg-surface-container font-label-mono text-body-sm px-4 py-3 pr-10 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase cursor-pointer"
                 >
                   <option value="">SELECCIONAR PUNTO...</option>
-                  {DELIVERY_POINTS.map(point => (
-                    <option key={point} value={point}>
-                      {point.toUpperCase()}
+                  {deliveryPoints.map(point => (
+                    <option key={point.id} value={point.id}>
+                      {point.name.toUpperCase()} — {point.address}
                     </option>
                   ))}
                 </select>
@@ -223,7 +236,7 @@ export default function CheckoutPage() {
             {/* Submit button */}
             <button
               onClick={handleCheckout}
-              disabled={isProcessing || !customerName.trim() || !deliveryPoint}
+              disabled={isProcessing || !customerName.trim() || !customerPhone.trim() || !deliveryPointId}
               className="w-full py-4 px-6 bg-primary-container hover:bg-surface-bright text-on-primary-container hover:text-on-surface font-headline-sm text-headline-sm font-extrabold uppercase tracking-tight transition-all duration-200 flex items-center justify-center gap-3 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isProcessing ? (

@@ -1,5 +1,5 @@
 import supabase from '../../../core/supabaseClient'
-import type { ProductWithDetails } from '../../../types'
+import type { ProductWithDetails, DeliveryPoint, Category } from '../../../types'
 
 export async function fetchProducts(): Promise<ProductWithDetails[]> {
   const { data, error } = await supabase
@@ -9,6 +9,8 @@ export async function fetchProducts(): Promise<ProductWithDetails[]> {
       product_variants (*),
       product_images (*)
     `)
+    .eq('is_active', true)
+    .order('created_at', { ascending: false })
 
   if (error) {
     console.error('Error fetching products:', error)
@@ -35,4 +37,33 @@ export async function fetchProductById(id: string): Promise<ProductWithDetails |
   }
 
   return data as ProductWithDetails
+}
+
+export async function fetchCategories(): Promise<Category[]> {
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*')
+    .order('name')
+
+  if (error) {
+    console.error('Error fetching categories:', error)
+    return []
+  }
+
+  return (data as Category[]) || []
+}
+
+export async function fetchDeliveryPoints(): Promise<DeliveryPoint[]> {
+  const { data, error } = await supabase
+    .from('delivery_points')
+    .select('*')
+    .eq('is_active', true)
+    .order('name')
+
+  if (error) {
+    console.error('Error fetching delivery points:', error)
+    return []
+  }
+
+  return (data as DeliveryPoint[]) || []
 }

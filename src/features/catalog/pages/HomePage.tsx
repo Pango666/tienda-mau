@@ -86,10 +86,10 @@ export default function HomePage() {
               </div>
               <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-extrabold text-on-surface tracking-tighter uppercase mb-4 leading-none">
                 DROP 04 // <br className="hidden sm:inline" />
-                <span className="text-primary-container">NOCTURNAL</span> CAPS
+                <span className="text-primary-container">NOCTURNAL</span> APPAREL
               </h1>
               <p className="font-body-lg text-body-lg text-secondary max-w-xl mb-8">
-                Streetwear headwear engineered for the concrete culture. Paneles de sarga técnica reforzada, calce estructurado milimétrico e insignias reflectivas grado militar.
+                Streetwear apparel engineered for the concrete culture. Telas técnicas reforzadas, calce estructurado milimétrico e insignias reflectivas grado militar.
               </p>
               <div className="grid grid-cols-3 gap-3 mb-10 max-w-lg">
                 <div className="bg-surface-container p-3">

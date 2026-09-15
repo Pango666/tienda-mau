@@ -67,13 +67,13 @@ export default function HomePage() {
           </div>
           
           <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-center gap-6 md:gap-8 bg-surface-container-low p-6 md:p-10 lg:p-12 shadow-xl relative z-10 -mt-12 mx-4 mb-8 lg:mt-0 lg:mx-0 lg:mb-0 overflow-hidden">
-            <div className="absolute right-4 top-4 font-label-mono text-[90px] text-surface-container-highest/20 font-black leading-none select-none pointer-events-none -z-0">01</div>
+            <div className="absolute right-4 top-4 font-label-mono text-[60px] md:text-[90px] text-surface-container-highest/20 font-black leading-none select-none pointer-events-none -z-0">01</div>
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 bg-surface-container-highest px-3 py-1 text-on-surface-variant font-label-mono text-label-mono mb-6">
                 <span className="w-2 h-2 bg-primary-container animate-pulse"></span>
                 <span>NUEVO LANZAMIENTO // ITEM RECIENTE</span>
               </div>
-              <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-extrabold text-on-surface tracking-tighter uppercase mb-4 leading-none">
+              <h1 className="font-headline-lg text-headline-md md:text-headline-lg font-extrabold text-on-surface tracking-tighter uppercase mb-4 leading-none">
                 {latestProduct ? latestProduct.title : 'CARGANDO...'}
               </h1>
               <p className="font-body-lg text-body-lg text-secondary max-w-xl mb-8 line-clamp-3">
@@ -141,7 +141,7 @@ export default function HomePage() {
               <span className="h-2 w-2 bg-primary-container inline-block"></span>
               <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// UNIDADES DE ALTA DEMANDA</span>
             </div>
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-md font-extrabold text-on-surface uppercase tracking-tight">
+            <h2 className="font-headline-lg text-headline-sm md:text-headline-md font-extrabold text-on-surface uppercase tracking-tight">
               LO MÁS VENDIDO
             </h2>
           </div>
@@ -182,9 +182,9 @@ export default function HomePage() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="h-2 w-2 bg-primary-container inline-block"></span>
-              <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// DEPARTAMENTOS</span>
+              <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// EXPLORAR POR ESTILO</span>
             </div>
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-md font-extrabold text-on-surface uppercase tracking-tight">
+            <h2 className="font-headline-lg text-headline-sm md:text-headline-md font-extrabold text-on-surface uppercase tracking-tight">
               CATEGORÍAS
             </h2>
           </div>

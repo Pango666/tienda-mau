@@ -16,32 +16,33 @@ export async function processCheckout(
   if (!deliveryPointId) throw new Error('Selecciona un punto de entrega')
   if (items.length === 0) throw new Error('El carrito está vacío')
 
-  let orderId = Math.random().toString(36).substring(2, 10).toUpperCase()
+  let orderId = crypto.randomUUID()
   try {
-    // 2. INSERT order → get order_id
-    const { data: order, error: orderError } = await supabase
+    // 2. INSERT order with predefined UUID (no select needed)
+    const { error: orderError } = await supabase
       .from('orders')
       .insert({
+        id: orderId,
         customer_name: customerName.trim(),
         customer_phone: customerPhone.trim(),
         delivery_point_id: deliveryPointId,
         total_amount: totalAmount,
         status: 'pending',
       })
-      .select('id')
-      .single()
 
-    if (order && !orderError) {
-      orderId = order.id
+    if (!orderError) {
       // 3. INSERT order_items in bulk with unit_price
       const orderItems = items.map(item => ({
-        order_id: order.id,
+        order_id: orderId,
         variant_id: item.variant_id,
         quantity: item.quantity,
         unit_price: item.price,
       }))
 
-      await supabase.from('order_items').insert(orderItems)
+      const { error: itemsError } = await supabase.from('order_items').insert(orderItems)
+      if (itemsError) {
+        console.warn('Could not save order items to DB:', itemsError)
+      }
     } else {
       console.warn('Could not save order to DB, proceeding to WhatsApp anyway:', orderError)
     }

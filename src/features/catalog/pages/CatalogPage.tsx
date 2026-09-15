@@ -64,6 +64,9 @@ export default function CatalogPage() {
     products.flatMap(p => p.product_variants?.map(v => v.color.trim().toUpperCase()) || [])
   )).sort()
 
+  const numericSizes = availableSizes.filter(s => !isNaN(Number(s)))
+  const letterSizes = availableSizes.filter(s => isNaN(Number(s)))
+
   const colorMap: Record<string, string> = {
     'NEGRO': 'bg-black',
     'BLANCO': 'bg-white',
@@ -178,20 +181,23 @@ export default function CatalogPage() {
                     <span className="text-on-surface group-hover:text-primary transition-colors">TODAS</span>
                   </span>
                 </label>
-                {categories.map((cat) => (
-                  <label key={cat.id} className="flex items-center justify-between cursor-pointer group bg-surface-container/50 hover:bg-surface-container px-2 py-1.5 transition-colors">
-                    <span className="flex items-center gap-2">
-                      <input 
-                        className="w-4 h-4 rounded-none accent-primary-container bg-surface-container cursor-pointer" 
-                        type="radio" 
-                        name="category"
-                        checked={selectedCategory === cat.slug}
-                        onChange={() => setSelectedCategory(cat.slug)}
-                      />
-                      <span className="text-on-surface group-hover:text-primary transition-colors">{cat.name}</span>
-                    </span>
-                  </label>
-                ))}
+                {categories.map((cat) => {
+                  const formattedName = cat.name.charAt(0).toUpperCase() + cat.name.slice(1).toLowerCase();
+                  return (
+                    <label key={cat.id} className="flex items-center justify-between cursor-pointer group bg-surface-container/50 hover:bg-surface-container px-2 py-1.5 transition-colors">
+                      <span className="flex items-center gap-2">
+                        <input 
+                          className="w-4 h-4 rounded-none accent-primary-container bg-surface-container cursor-pointer" 
+                          type="radio" 
+                          name="category"
+                          checked={selectedCategory === cat.slug}
+                          onChange={() => setSelectedCategory(cat.slug)}
+                        />
+                        <span className="text-on-surface group-hover:text-primary transition-colors">{formattedName}</span>
+                      </span>
+                    </label>
+                  )
+                })}
               </div>
             </div>
 
@@ -239,26 +245,55 @@ export default function CatalogPage() {
             </div>
 
             {/* Size */}
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">TALLA</span>
-                <span className="font-label-mono text-[10px] text-on-surface-variant">TODAS</span>
-              </div>
-              <div className="grid grid-cols-4 gap-2 font-label-mono text-body-sm">
-                {availableSizes.map((size) => (
-                  <button 
-                    key={size}
-                    type="button"
-                    onClick={() => setSelectedSize(selectedSize === size ? null : size)}
-                    className={`flex items-center justify-center p-2 text-[11px] font-bold transition-colors border ${selectedSize === size ? 'border-primary bg-primary-container text-on-primary-container' : 'border-surface-container-high bg-surface-container/50 hover:bg-surface-container text-on-surface'}`}
-                  >
-                    {size}
-                  </button>
-                ))}
-                {availableSizes.length === 0 && (
-                  <span className="font-label-mono text-[10px] text-on-surface-variant col-span-4">No hay tallas disponibles</span>
-                )}
-              </div>
+            <div className="flex flex-col gap-5">
+              {numericSizes.length > 0 && (
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">TALLA (CALZADO)</span>
+                    <span className="font-label-mono text-[10px] text-on-surface-variant">EU</span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-2 font-label-mono text-body-sm">
+                    {numericSizes.map((size) => (
+                      <button 
+                        key={size}
+                        type="button"
+                        onClick={() => setSelectedSize(selectedSize === size ? null : size)}
+                        className={`flex items-center justify-center p-2 text-[11px] font-bold transition-colors border ${selectedSize === size ? 'border-primary bg-primary-container text-on-primary-container' : 'border-surface-container-high bg-surface-container/50 hover:bg-surface-container text-on-surface'}`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {letterSizes.length > 0 && (
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">TALLA (PRENDAS)</span>
+                    <span className="font-label-mono text-[10px] text-on-surface-variant">LETRAS</span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-2 font-label-mono text-body-sm">
+                    {letterSizes.map((size) => (
+                      <button 
+                        key={size}
+                        type="button"
+                        onClick={() => setSelectedSize(selectedSize === size ? null : size)}
+                        className={`flex items-center justify-center p-2 text-[11px] font-bold transition-colors border ${selectedSize === size ? 'border-primary bg-primary-container text-on-primary-container' : 'border-surface-container-high bg-surface-container/50 hover:bg-surface-container text-on-surface'}`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {availableSizes.length === 0 && (
+                <div className="flex flex-col gap-3">
+                  <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">TALLA</span>
+                  <span className="font-label-mono text-[10px] text-on-surface-variant">No hay tallas disponibles</span>
+                </div>
+              )}
             </div>
 
             {/* Delivery badge */}

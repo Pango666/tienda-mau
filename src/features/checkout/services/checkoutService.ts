@@ -57,7 +57,8 @@ export async function processCheckout(
     )
     .join('\n')
 
-  const message = `Hola, quiero confirmar mi pedido #${orderId.slice(0, 8)}.\nCliente: ${customerName.trim()}\nTeléfono: ${customerPhone.trim()}\nDetalle:\n${detail}\nTotal: Bs.${totalAmount.toFixed(2)}`
+  const adminLink = `${window.location.origin}/admin/orders/${orderId}`
+  const message = `Hola, quiero confirmar mi pedido #${orderId.slice(0, 8)}.\nCliente: ${customerName.trim()}\nTeléfono: ${customerPhone.trim()}\nDetalle:\n${detail}\nTotal: Bs.${totalAmount.toFixed(2)}\n\nVer orden en sistema: ${adminLink}`
 
   // 5. Open WhatsApp in new tab
   const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`

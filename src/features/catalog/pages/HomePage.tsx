@@ -43,52 +43,9 @@ export default function HomePage() {
       </div>
 
       {/* Hero */}
-      <section className="relative w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-6 lg:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          <div className="lg:col-span-7 flex flex-col justify-center gap-8 bg-surface-container-low p-6 md:p-10 lg:p-12 shadow-xl relative overflow-hidden">
-            <div className="absolute right-4 top-4 font-label-mono text-[90px] text-surface-container-highest/20 font-black leading-none select-none pointer-events-none -z-0">01</div>
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 bg-surface-container-highest px-3 py-1 text-on-surface-variant font-label-mono text-label-mono mb-6">
-                <span className="w-2 h-2 bg-primary-container animate-pulse"></span>
-                <span>NUEVO LANZAMIENTO // ITEM RECIENTE</span>
-              </div>
-              <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-extrabold text-on-surface tracking-tighter uppercase mb-4 leading-none">
-                {latestProduct ? latestProduct.title : 'CARGANDO...'}
-              </h1>
-              <p className="font-body-lg text-body-lg text-secondary max-w-xl mb-8 line-clamp-3">
-                {latestProduct ? latestProduct.description : 'Buscando la prenda más reciente en la base de datos...'}
-              </p>
-              <div className="grid grid-cols-3 gap-3 mb-10 max-w-lg">
-                <div className="bg-surface-container p-3">
-                  <span className="block font-label-mono text-label-mono text-outline uppercase">MATERIAL</span>
-                  <span className="font-headline-sm text-[11px] font-bold text-on-surface truncate block mt-1" title={latestProduct?.material || ''}>
-                    {latestProduct?.material || '...'}
-                  </span>
-                </div>
-                <div className="bg-surface-container p-3">
-                  <span className="block font-label-mono text-label-mono text-outline uppercase">PRECIO</span>
-                  <span className="font-headline-sm text-headline-sm font-bold text-on-surface mt-1 block">
-                    {latestProduct ? `Bs. ${latestProduct.base_price}` : '...'}
-                  </span>
-                </div>
-                <div className="bg-surface-container p-3">
-                  <span className="block font-label-mono text-label-mono text-outline uppercase">STATUS</span>
-                  <span className="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-1 mt-1">DISPONIBLE</span>
-                </div>
-              </div>
-            </div>
-            <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-              <Link
-                to={latestProduct ? `/producto/${latestProduct.id}` : '#'}
-                className={`bg-primary-container hover:bg-on-surface hover:text-surface text-on-primary-container font-headline-sm text-headline-sm px-8 py-4 uppercase font-bold tracking-tight text-center transition-colors shadow-md flex items-center justify-center gap-3 group ${!latestProduct ? 'opacity-50 pointer-events-none' : ''}`}
-              >
-                <span>VER PRODUCTO</span>
-                <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="lg:col-span-5 relative bg-surface-container-lowest min-h-[480px] lg:min-h-full overflow-hidden shadow-xl group">
+      <section className="relative w-full max-w-[1440px] mx-auto px-0 md:px-margin-tablet lg:px-margin-desktop py-0 lg:py-12">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 lg:gap-6 items-stretch">
+          <div className="lg:col-span-5 order-1 lg:order-2 relative bg-surface-container-lowest h-[60vh] lg:h-auto min-h-[400px] overflow-hidden lg:shadow-xl group">
             {latestProduct?.product_images?.[0]?.image_url ? (
               <img
                 alt={latestProduct.title}
@@ -106,6 +63,49 @@ export default function HomePage() {
             </div>
             <div className="absolute bottom-4 right-4 bg-primary-container text-on-primary-container px-3 py-1 font-label-mono text-label-mono uppercase font-bold tracking-widest shadow-md">
               RECIÉN AÑADIDO
+            </div>
+          </div>
+          
+          <div className="lg:col-span-7 order-2 lg:order-1 flex flex-col justify-center gap-6 md:gap-8 bg-surface-container-low p-6 md:p-10 lg:p-12 shadow-xl relative z-10 -mt-12 mx-4 mb-8 lg:mt-0 lg:mx-0 lg:mb-0 overflow-hidden">
+            <div className="absolute right-4 top-4 font-label-mono text-[90px] text-surface-container-highest/20 font-black leading-none select-none pointer-events-none -z-0">01</div>
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 bg-surface-container-highest px-3 py-1 text-on-surface-variant font-label-mono text-label-mono mb-6">
+                <span className="w-2 h-2 bg-primary-container animate-pulse"></span>
+                <span>NUEVO LANZAMIENTO // ITEM RECIENTE</span>
+              </div>
+              <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-extrabold text-on-surface tracking-tighter uppercase mb-4 leading-none">
+                {latestProduct ? latestProduct.title : 'CARGANDO...'}
+              </h1>
+              <p className="font-body-lg text-body-lg text-secondary max-w-xl mb-8 line-clamp-3">
+                {latestProduct ? latestProduct.description : 'Buscando la prenda más reciente en la base de datos...'}
+              </p>
+              <div className="grid grid-cols-3 gap-3 mb-8 lg:mb-10 max-w-lg">
+                <div className="bg-surface-container p-3">
+                  <span className="block font-label-mono text-label-mono text-outline uppercase">MATERIAL</span>
+                  <span className="font-headline-sm text-[11px] font-bold text-on-surface truncate block mt-1" title={latestProduct?.material || ''}>
+                    {latestProduct?.material || '...'}
+                  </span>
+                </div>
+                <div className="bg-surface-container p-3">
+                  <span className="block font-label-mono text-label-mono text-outline uppercase">PRECIO</span>
+                  <span className="font-headline-sm text-headline-sm font-bold text-on-surface mt-1 block">
+                    {latestProduct ? `Bs. ${latestProduct.base_price}` : '...'}
+                  </span>
+                </div>
+                <div className="bg-surface-container p-3">
+                  <span className="block font-label-mono text-label-mono text-outline uppercase">STATUS</span>
+                  <span className="font-headline-sm text-[11px] font-bold text-primary flex items-center gap-1 mt-1">DISPONIBLE</span>
+                </div>
+              </div>
+            </div>
+            <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <Link
+                to={latestProduct ? `/producto/${latestProduct.id}` : '#'}
+                className={`bg-primary-container hover:bg-on-surface hover:text-surface text-on-primary-container font-headline-sm text-headline-sm px-8 py-4 uppercase font-bold tracking-tight text-center transition-colors shadow-md flex items-center justify-center gap-3 group ${!latestProduct ? 'opacity-50 pointer-events-none' : ''}`}
+              >
+                <span>VER PRODUCTO</span>
+                <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -159,13 +159,19 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <style dangerouslySetInnerHTML={{__html: `
+          .hide-scrollbar::-webkit-scrollbar { display: none; }
+          .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        `}} />
+
+        <div className="flex lg:grid flex-nowrap lg:grid-cols-4 gap-4 lg:gap-6 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none pb-6 lg:pb-0 hide-scrollbar">
           {products.map(product => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onQuickAdd={(title) => showToast(title)}
-            />
+            <div key={product.id} className="w-[80vw] sm:w-[45vw] lg:w-auto shrink-0 snap-center lg:snap-align-none">
+              <ProductCard
+                product={product}
+                onQuickAdd={(title) => showToast(title)}
+              />
+            </div>
           ))}
         </div>
       </section>
@@ -222,13 +228,14 @@ export default function HomePage() {
             <span className="material-symbols-outlined text-[14px]">open_in_new</span>
           </Link>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex lg:grid flex-nowrap lg:grid-cols-4 gap-4 lg:gap-6 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none pb-6 lg:pb-0 hide-scrollbar">
           {products.slice(1, 5).map(product => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onQuickAdd={(title) => showToast(title)}
-            />
+            <div key={product.id} className="w-[80vw] sm:w-[45vw] lg:w-auto shrink-0 snap-center lg:snap-align-none">
+              <ProductCard
+                product={product}
+                onQuickAdd={(title) => showToast(title)}
+              />
+            </div>
           ))}
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { fetchProducts } from '../services/catalogService'
-import type { ProductWithDetails } from '../../../types'
+import { fetchProducts, fetchCategories } from '../services/catalogService'
+import type { ProductWithDetails, Category } from '../../../types'
 import ProductCard from '../components/ProductCard'
 import Toast, { useToast } from '../../../shared/Toast'
 
@@ -21,32 +21,11 @@ export default function HomePage() {
   const [products, setProducts] = useState<ProductWithDetails[]>([])
   const { toast, showToast, hideToast } = useToast()
   
-  const latestProduct = products.length > 0 ? products[0] : null
-  const [countdown, setCountdown] = useState({
-    days: '02', hours: '14', mins: '38', secs: '52'
-  })
+  const [categories, setCategories] = useState<Category[]>([])
 
   useEffect(() => {
     fetchProducts().then(data => setProducts(data.slice(0, 4)))
-  }, [])
-
-  useEffect(() => {
-    let totalSeconds = 2 * 86400 + 14 * 3600 + 38 * 60 + 52
-    const interval = setInterval(() => {
-      if (totalSeconds <= 0) return
-      totalSeconds--
-      const d = Math.floor(totalSeconds / 86400)
-      const h = Math.floor((totalSeconds % 86400) / 3600)
-      const m = Math.floor((totalSeconds % 3600) / 60)
-      const s = totalSeconds % 60
-      setCountdown({
-        days: String(d).padStart(2, '0'),
-        hours: String(h).padStart(2, '0'),
-        mins: String(m).padStart(2, '0'),
-        secs: String(s).padStart(2, '0'),
-      })
-    }, 1000)
-    return () => clearInterval(interval)
+    fetchCategories().then(data => setCategories(data))
   }, [])
 
   return (
@@ -202,64 +181,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Promo Banner */}
-      <section className="w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-8 mb-6" id="lookbook-seccion">
-        <div className="relative bg-surface-container-lowest overflow-hidden shadow-2xl p-8 md:p-12 lg:p-16">
-          <div className="absolute inset-0 bg-gradient-to-r from-surface-container-lowest via-surface-container-lowest/80 to-transparent z-10"></div>
-          <div
-            className="absolute inset-0 bg-cover bg-right filter grayscale brightness-50 opacity-40 mix-blend-luminosity"
-            style={{ backgroundImage: `url('${PROMO_BG}')` }}
-          ></div>
-          <div className="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 bg-primary-container text-on-primary-container px-3 py-1 font-label-mono text-label-mono font-bold uppercase tracking-wider mb-4">
-                <span>COLECCIÓN PROTOCOLO 05</span>
-              </div>
-              <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-extrabold text-on-surface uppercase tracking-tight leading-none mb-4">
-                EDICIÓN LIMITADA // <br />
-                <span className="text-primary-container">CULTURA URBANA</span>
-              </h2>
-              <p className="font-body-lg text-body-lg text-secondary max-w-xl mb-6">
-                Colección cápsula de 150 piezas numeradas con herrajes de titanio negro y bordado ultravioleta reactivo. Los registros cierran automáticamente al agotarse las reservas.
-              </p>
-              <div className="flex flex-wrap items-center gap-4">
-                <button className="bg-primary-container hover:bg-on-surface hover:text-surface text-on-primary-container font-headline-sm text-headline-sm px-8 py-3.5 uppercase font-bold tracking-tight transition-colors shadow-lg" type="button">
-                  PRE-ORDENAR AHORA
-                </button>
-                <span className="font-label-mono text-label-mono text-outline uppercase flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
-                  SOLO 47 PLAZAS RESTANTES
-                </span>
-              </div>
+      {/* Categories Grid */}
+      <section className="w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-8 mb-6" id="categorias-seccion">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="h-2 w-2 bg-primary-container inline-block"></span>
+              <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// DEPARTAMENTOS</span>
             </div>
-
-            {/* Countdown */}
-            <div className="lg:col-span-5 bg-surface-container-low/90 backdrop-blur-md p-6 lg:p-8 shadow-xl">
-              <div className="flex items-center justify-between pb-4 mb-4">
-                <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// TIEMPO PARA ACTIVACIÓN</span>
-                <span className="font-label-mono text-[10px] text-outline">ACTIVACIÓN AUTOMÁTICA</span>
-              </div>
-              <div className="grid grid-cols-4 gap-2 text-center">
-                {[
-                  { val: countdown.days, label: 'DÍAS' },
-                  { val: countdown.hours, label: 'HORAS' },
-                  { val: countdown.mins, label: 'MINS' },
-                  { val: countdown.secs, label: 'SEGS', accent: true },
-                ].map((t, i) => (
-                  <div key={i} className="bg-surface-container p-3">
-                    <span className={`font-headline-md text-headline-md font-extrabold block ${t.accent ? 'text-primary-container' : 'text-on-surface'}`}>
-                      {t.val}
-                    </span>
-                    <span className="font-label-mono text-[10px] text-outline uppercase block mt-1">{t.label}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 pt-4 flex items-center justify-between font-label-mono text-[11px] text-secondary">
-                <span>RELEASE: 28 OCTUBRE 2025</span>
-                <span>20:00 UTC</span>
-              </div>
-            </div>
+            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-md font-extrabold text-on-surface uppercase tracking-tight">
+              CATEGORÍAS
+            </h2>
           </div>
+        </div>
+        
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {categories.map((cat, idx) => (
+            <Link
+              to={`/catalogo?categoria=${cat.slug}`}
+              key={cat.id}
+              className="group relative h-48 bg-surface-container overflow-hidden shadow-md flex items-center justify-center transition-all hover:-translate-y-1 hover:shadow-xl"
+            >
+              <div className="absolute inset-0 bg-surface-container-high transition-transform group-hover:scale-105">
+                {/* Fallback pattern if no category image exists */}
+                <div className="w-full h-full opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/40 to-transparent"></div>
+              
+              <div className="relative z-10 text-center p-4">
+                <span className="font-label-mono text-[10px] text-primary block mb-1">
+                  // 0{idx + 1}
+                </span>
+                <h3 className="font-headline-sm text-xl font-bold text-on-surface uppercase tracking-wider group-hover:text-primary transition-colors">
+                  {cat.name}
+                </h3>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 

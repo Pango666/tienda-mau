@@ -1,18 +1,38 @@
 import { useState, useEffect } from 'react'
-import { fetchProducts } from '../services/catalogService'
-import type { ProductWithDetails } from '../../../types'
+import { useLocation } from 'react-router-dom'
+import { fetchProducts, fetchCategories } from '../services/catalogService'
+import type { ProductWithDetails, Category } from '../../../types'
 import ProductCard from '../components/ProductCard'
 import Toast, { useToast } from '../../../shared/Toast'
 
 export default function CatalogPage() {
+  const location = useLocation()
+  
   const [products, setProducts] = useState<ProductWithDetails[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    new URLSearchParams(location.search).get('categoria')
+  )
+  
   const [gridCols, setGridCols] = useState<3 | 4>(3)
   const [priceMax, setPriceMax] = useState(500)
   const { toast, showToast, hideToast } = useToast()
 
   useEffect(() => {
     fetchProducts().then(data => setProducts(data))
+    fetchCategories().then(data => setCategories(data))
   }, [])
+  
+  // Also update selectedCategory if URL changes (e.g. going back)
+  useEffect(() => {
+    setSelectedCategory(new URLSearchParams(location.search).get('categoria'))
+  }, [location.search])
+  
+  const filteredProducts = products.filter(p => {
+    if (selectedCategory && p.category?.slug !== selectedCategory) return false;
+    if (p.base_price > priceMax) return false;
+    return true;
+  })
 
   return (
     <>
@@ -83,7 +103,16 @@ export default function CatalogPage() {
           <aside className="lg:col-span-3 flex flex-col gap-6 bg-surface-container-lowest p-5">
             <div className="flex items-center justify-between pb-3 bg-surface-container px-3 py-2">
               <span className="font-label-mono text-label-mono text-on-surface uppercase font-bold tracking-wider">// FILTROS AVANZADOS</span>
-              <button className="font-label-mono text-[10px] text-primary hover:underline uppercase" type="button">LIMPIAR TODO</button>
+              <button 
+                className="font-label-mono text-[10px] text-primary hover:underline uppercase" 
+                type="button"
+                onClick={() => {
+                  setSelectedCategory(null)
+                  setPriceMax(500)
+                }}
+              >
+                LIMPIAR TODO
+              </button>
             </div>
 
             {/* Cap Type */}
@@ -93,13 +122,30 @@ export default function CatalogPage() {
                 <span className="font-label-mono text-[10px] text-on-surface-variant">SILUETA</span>
               </div>
               <div className="flex flex-col gap-2 font-label-mono text-body-sm">
-                {['Poleras', 'Hoodies', 'Pantalones', 'Chaquetas', 'Accesorios'].map((type, idx) => (
-                  <label key={type} className="flex items-center justify-between cursor-pointer group bg-surface-container/50 hover:bg-surface-container px-2 py-1.5 transition-colors">
+                <label className="flex items-center justify-between cursor-pointer group bg-surface-container/50 hover:bg-surface-container px-2 py-1.5 transition-colors">
+                  <span className="flex items-center gap-2">
+                    <input 
+                      className="w-4 h-4 rounded-none accent-primary-container bg-surface-container cursor-pointer" 
+                      type="radio" 
+                      name="category"
+                      checked={selectedCategory === null} 
+                      onChange={() => setSelectedCategory(null)}
+                    />
+                    <span className="text-on-surface group-hover:text-primary transition-colors">TODAS</span>
+                  </span>
+                </label>
+                {categories.map((cat) => (
+                  <label key={cat.id} className="flex items-center justify-between cursor-pointer group bg-surface-container/50 hover:bg-surface-container px-2 py-1.5 transition-colors">
                     <span className="flex items-center gap-2">
-                      <input className="w-4 h-4 rounded-none accent-primary-container bg-surface-container cursor-pointer" type="checkbox" defaultChecked={idx === 0} />
-                      <span className="text-on-surface group-hover:text-primary transition-colors">{type}</span>
+                      <input 
+                        className="w-4 h-4 rounded-none accent-primary-container bg-surface-container cursor-pointer" 
+                        type="radio" 
+                        name="category"
+                        checked={selectedCategory === cat.slug}
+                        onChange={() => setSelectedCategory(cat.slug)}
+                      />
+                      <span className="text-on-surface group-hover:text-primary transition-colors">{cat.name}</span>
                     </span>
-                    <span className="text-on-surface-variant text-[11px] font-mono">[{String(8 - idx).padStart(2, '0')}]</span>
                   </label>
                 ))}
               </div>
@@ -180,7 +226,7 @@ export default function CatalogPage() {
           {/* Products Grid */}
           <div className="lg:col-span-9 flex flex-col gap-8">
             <div className={`grid grid-cols-1 sm:grid-cols-2 ${gridCols === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6 transition-all duration-300`}>
-              {products.map(product => (
+              {filteredProducts.map(product => (
                 <ProductCard
                   key={product.id}
                   product={product}
@@ -194,7 +240,7 @@ export default function CatalogPage() {
               <div className="w-full flex items-center gap-4">
                 <div className="flex-1 h-px bg-surface-container-highest"></div>
                 <span className="font-label-mono text-[11px] text-on-surface-variant uppercase">
-                  MOSTRANDO {products.length} DE {products.length} MODELOS
+                  MOSTRANDO {filteredProducts.length} DE {products.length} MODELOS
                 </span>
                 <div className="flex-1 h-px bg-surface-container-highest"></div>
               </div>

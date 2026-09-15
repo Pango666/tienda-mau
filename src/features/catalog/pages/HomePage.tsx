@@ -5,22 +5,17 @@ import type { ProductWithDetails, Category } from '../../../types'
 import ProductCard from '../components/ProductCard'
 import Toast, { useToast } from '../../../shared/Toast'
 
-const HERO_IMAGE =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDfDXOaAER6vXJVlJ4nHTGfTyy0E0K9d_WftF2rvLk5-ThJrAW6xTDXu44X2H-Kfv2GAG-EU3gmk_ISMoCjywGobCIcIYYUYULFvc9gIVooyoDDrQP3d9OPahGQs8m3o7QDNbNF__98s7IhHiMa2TwCFfMmVcaUGggTD0PGMilTzNXvqMFeNvBUHnAen8zgMqZ5z9Uu6tw13VmA7KqNabnxPKfmgmiPcTEgni5L3OvQih6gljpyeuTS'
-
 const LOOKBOOK_IMAGES = [
   'https://lh3.googleusercontent.com/aida-public/AB6AXuBzoYhzxUZ1G9aJ6WWBoXP4skVAFEFv0H9lDzW9n6_F0T9r7LvVLWn2kf8tP7GEb1DVGKHa7ALjwFRNgiLYyfIM5G4Ab6N7FIcupp52fZ-JJ0g5QcG_4VcttrcSDbn2sYgvJLjc_nndiaoA2D4_PEzgLviEXCkxBMl-l_r5HS_E-nb63azfVJB3av2s9qy72e3AGFqcGGYbX6GvClGjo_VAfo7pWN1vfQLBrHiT7iNx35DFjc8rWsyk',
   'https://lh3.googleusercontent.com/aida-public/AB6AXuDf6d5HemDo9z0zEARajtXU7nqovC7zkY2WX7x3kL6XnJ43WUKz_7aiX1BKivEWuYiaNsTDb8h9iZL2HuAh6xiiVlJwz0ea1ZqU0DibbEe6mADb54QFU4GhPGcWkwetIz0S62alf0IjJkUJhFT7KpsLnWD12m3WE-n8Dn1gzhg8NHAc6PRpIO9YEqDUdSv7f_QZJ4JiCYysoocENiX0Noq4NyPscy0sNaRHgwYmG3pr34TorcForqIC',
   'https://lh3.googleusercontent.com/aida-public/AB6AXuDZFoweByYtqkGSA_JxSJoW0y_TtB8tSW7dc6JE1YLnvAlpxH6AoXUESpkSE68bo-IW25yyf8CFg3_n2byP-fJl2WlKLV0b6h5o3jrWnI-MfCiGVW9nQieNerKjPJH6NLwKtKLVVmc1565sYFyI-_h-F9yV1221R_9Cf1dKRrAnPvwFEPOudiC-VEIul7OTilztxA0-w7bY05auMQyGDllwTRqGfH360MK3NgM7FZkS8rGsCzsuCz9V',
 ]
 
-const PROMO_BG =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuCezOM5jLD0hBkH7HBKA3FleuWqo94sVZorgCfPjOQ41ZcMsnOsp9JQ-5rYQ_Qkcy29DOsC0mdPk4OXcoYAhi-NehBvlwKQQ4Uufk-iGTmMybXe_JLHcaGQEjijf8QxL0xnHtBK5wCy5b65mKt_Gt0JJ-oCSHICAFp1qFMqMoz7C1dIcYZF-OzkLaffBumhNdcqZSguiDVwVoBaz1LQyZlUaS7zBd469ar2OSz71jeGaPUHFarv2nBq'
-
 export default function HomePage() {
   const [products, setProducts] = useState<ProductWithDetails[]>([])
   const { toast, showToast, hideToast } = useToast()
   
+  const latestProduct = products.length > 0 ? products[0] : null
   const [categories, setCategories] = useState<Category[]>([])
 
   useEffect(() => {
@@ -111,7 +106,7 @@ export default function HomePage() {
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-90 lg:opacity-75"></div>
             <div className="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm p-3 max-w-[200px]">
-              <span className="font-label-mono text-[9px] text-primary block">// NUEVO INGRESO</span>
+              <span className="font-label-mono text-[9px] text-primary block">// {latestProduct?.category_id ? categories.find(c => c.id === latestProduct.category_id)?.name.toUpperCase() : 'NUEVO INGRESO'}</span>
               <span className="font-headline-sm text-body-md font-bold text-on-surface uppercase tracking-tight line-clamp-1">{latestProduct?.title || 'OVERKAP'}</span>
               <span className="font-label-mono text-[10px] text-secondary block mt-1">ÚLTIMO REGISTRO</span>
             </div>

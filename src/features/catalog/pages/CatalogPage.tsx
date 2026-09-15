@@ -28,8 +28,10 @@ export default function CatalogPage() {
     setSelectedCategory(new URLSearchParams(location.search).get('categoria'))
   }, [location.search])
   
+  const targetCategoryId = selectedCategory ? categories.find(c => c.slug === selectedCategory)?.id : null;
+
   const filteredProducts = products.filter(p => {
-    if (selectedCategory && p.category?.slug !== selectedCategory) return false;
+    if (selectedCategory && p.category_id !== targetCategoryId) return false;
     if (p.base_price > priceMax) return false;
     return true;
   })

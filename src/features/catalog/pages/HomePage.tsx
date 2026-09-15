@@ -147,7 +147,7 @@ export default function HomePage() {
       <section className="w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { icon: 'storefront', tag: '// CONFIANZA TOTAL', title: 'PUNTOS DE ENTREGA CÉNTRICOS', desc: 'Retira tus prendas en nuestros hubs autorizados sin costo adicional.' },
+            { icon: 'storefront', tag: '// CONFIANZA TOTAL', title: 'PUNTOS DE ENTREGA CÉNTRICOS', desc: 'Entregas personales directamente en tus manos. Nuestro personal acude al lugar acordado puntualmente.' },
             { icon: 'local_shipping', tag: '// COBERTURA NACIONAL', title: 'ENVÍOS NACIONALES', desc: 'Llegamos a todos los departamentos del país mediante Courier de confianza.' },
             { icon: 'qr_code_2', tag: '// FÁCIL Y SEGURO', title: 'PAGOS EFECTIVO QR', desc: 'Realiza tu pago en segundos sin tarjetas, transferencia directa vía QR simple.' },
           ].map((item, idx) => (

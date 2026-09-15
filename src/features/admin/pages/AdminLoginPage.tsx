@@ -74,7 +74,7 @@ export default function AdminLoginPage() {
               onChange={e => setEmail(e.target.value)}
               placeholder="admin@wantedlodge.com"
               required
-              className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+              className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70"
             />
           </div>
 
@@ -90,7 +90,7 @@ export default function AdminLoginPage() {
               onChange={e => setPassword(e.target.value)}
               placeholder="••••••••••"
               required
-              className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+              className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70"
             />
           </div>
 

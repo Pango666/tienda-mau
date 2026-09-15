@@ -160,7 +160,7 @@ export default function CheckoutPage() {
                 value={customerName}
                 onChange={e => setCustomerName(e.target.value)}
                 placeholder="TU NOMBRE COMPLETO"
-                className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
               />
             </div>
 
@@ -174,7 +174,7 @@ export default function CheckoutPage() {
                 value={customerPhone}
                 onChange={e => setCustomerPhone(e.target.value)}
                 placeholder="+591 7XXXXXXX"
-                className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+                className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70"
               />
             </div>
 

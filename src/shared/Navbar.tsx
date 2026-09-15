@@ -66,7 +66,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center bg-surface-container px-3 py-1.5 border border-outline-variant/40 focus-within:border-primary-container transition-all">
             <span className="material-symbols-outlined text-outline text-sm mr-2">search</span>
             <input
-              className="bg-transparent border-0 outline-none text-body-sm font-label-mono text-on-surface placeholder:text-secondary-container w-44 lg:w-56"
+              className="bg-transparent border-0 outline-none text-body-sm font-label-mono text-on-surface placeholder:text-on-surface-variant/70 w-44 lg:w-56"
               placeholder="BUSCAR PIEZAS, DROPS..."
               type="text"
             />

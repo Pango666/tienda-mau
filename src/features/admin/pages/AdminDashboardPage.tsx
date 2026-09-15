@@ -481,7 +481,7 @@ export default function AdminDashboardPage() {
                   onChange={e => setNewCategory(c => ({ ...c, name: e.target.value, slug: e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, '-') }))}
                   required
                   placeholder="Ej: Poleras"
-                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -492,7 +492,7 @@ export default function AdminDashboardPage() {
                   onChange={e => setNewCategory(c => ({ ...c, slug: e.target.value }))}
                   required
                   placeholder="ej-poleras"
-                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70"
                 />
               </div>
               <button
@@ -530,7 +530,7 @@ export default function AdminDashboardPage() {
                     onChange={e => setNewProduct(p => ({ ...p, title: e.target.value }))}
                     required
                     placeholder="NOMBRE DEL PRODUCTO"
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -555,7 +555,7 @@ export default function AdminDashboardPage() {
                   onChange={e => setNewProduct(p => ({ ...p, description: e.target.value }))}
                   placeholder="DESCRIPCIÓN DEL PRODUCTO"
                   rows={3}
-                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container resize-none"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70 resize-none"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -566,7 +566,7 @@ export default function AdminDashboardPage() {
                     value={newProduct.material}
                     onChange={e => setNewProduct(p => ({ ...p, material: e.target.value }))}
                     placeholder="EJ: ALGODÓN 100%"
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -579,7 +579,7 @@ export default function AdminDashboardPage() {
                     onChange={e => setNewProduct(p => ({ ...p, base_price: Number(e.target.value) }))}
                     required
                     placeholder="0.00"
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70"
                   />
                 </div>
               </div>
@@ -635,7 +635,7 @@ export default function AdminDashboardPage() {
                     onChange={e => setShowEditModal(p => p ? { ...p, title: e.target.value } : null)}
                     required
                     placeholder="NOMBRE DEL PRODUCTO"
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -659,7 +659,7 @@ export default function AdminDashboardPage() {
                   onChange={e => setShowEditModal(p => p ? { ...p, description: e.target.value } : null)}
                   placeholder="DESCRIPCIÓN DEL PRODUCTO"
                   rows={3}
-                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container resize-none"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70 resize-none"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -670,7 +670,7 @@ export default function AdminDashboardPage() {
                     value={showEditModal.material || ''}
                     onChange={e => setShowEditModal(p => p ? { ...p, material: e.target.value } : null)}
                     placeholder="EJ: ALGODÓN 100%"
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -683,7 +683,7 @@ export default function AdminDashboardPage() {
                     onChange={e => setShowEditModal(p => p ? { ...p, base_price: Number(e.target.value) } : null)}
                     required
                     placeholder="0.00"
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70"
                   />
                 </div>
               </div>
@@ -739,7 +739,7 @@ export default function AdminDashboardPage() {
                     onChange={e => setNewVariant(v => ({ ...v, size: e.target.value }))}
                     required
                     placeholder="S, M, L..."
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -750,7 +750,7 @@ export default function AdminDashboardPage() {
                     onChange={e => setNewVariant(v => ({ ...v, color: e.target.value }))}
                     required
                     placeholder="NEGRO, BLANCO..."
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                   />
                 </div>
               </div>
@@ -762,7 +762,7 @@ export default function AdminDashboardPage() {
                     min="0"
                     value={newVariant.stock}
                     onChange={e => setNewVariant(v => ({ ...v, stock: Number(e.target.value) }))}
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -772,7 +772,7 @@ export default function AdminDashboardPage() {
                     value={newVariant.sku}
                     onChange={e => setNewVariant(v => ({ ...v, sku: e.target.value }))}
                     placeholder="OKP-001"
-                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                   />
                 </div>
               </div>

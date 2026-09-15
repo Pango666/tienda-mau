@@ -233,7 +233,7 @@ export default function AdminDeliveryPage() {
                   onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                   required
                   placeholder="EJ: PUNTO CENTRO"
-                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -244,7 +244,7 @@ export default function AdminDeliveryPage() {
                   onChange={e => setForm(f => ({ ...f, address: e.target.value }))}
                   required
                   placeholder="CALLE, NÚMERO, ZONA..."
-                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -254,7 +254,7 @@ export default function AdminDeliveryPage() {
                   value={form.schedule}
                   onChange={e => setForm(f => ({ ...f, schedule: e.target.value }))}
                   placeholder="LUN-SAB: 09:00 - 18:00"
-                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-secondary-container"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase placeholder:text-on-surface-variant/70"
                 />
               </div>
               <div className="flex flex-col gap-2">
@@ -264,7 +264,7 @@ export default function AdminDeliveryPage() {
                   value={form.maps_url}
                   onChange={e => setForm(f => ({ ...f, maps_url: e.target.value }))}
                   placeholder="https://maps.google.com/..."
-                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-secondary-container"
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70"
                 />
               </div>
               <button

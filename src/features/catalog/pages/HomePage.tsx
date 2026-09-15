@@ -101,7 +101,7 @@ export default function HomePage() {
             <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <Link
                 to={latestProduct ? `/producto/${latestProduct.id}` : '#'}
-                className={`bg-primary-container hover:bg-on-surface hover:text-surface text-on-primary-container font-headline-sm text-headline-sm px-8 py-4 uppercase font-bold tracking-tight text-center transition-colors shadow-md flex items-center justify-center gap-3 group ${!latestProduct ? 'opacity-50 pointer-events-none' : ''}`}
+                className={`bg-primary hover:bg-secondary text-on-primary font-headline-sm text-headline-sm px-8 py-4 uppercase font-bold tracking-tight text-center transition-colors shadow-lg flex items-center justify-center gap-3 group ${!latestProduct ? 'opacity-50 pointer-events-none' : ''}`}
               >
                 <span>VER PRODUCTO</span>
                 <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>

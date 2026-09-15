@@ -67,7 +67,7 @@ export default function ProductCard({ product, onQuickAdd }: ProductCardProps) {
       {onQuickAdd && totalStock > 0 && (
         <button
           aria-label={`Añadir ${product.title} al carrito`}
-          className="absolute bottom-[88px] right-3 w-10 h-10 bg-primary-container hover:bg-surface-bright text-on-primary-container hover:text-on-surface flex items-center justify-center shadow-lg transition-transform active:scale-95"
+          className="absolute bottom-[88px] right-3 w-10 h-10 bg-primary hover:bg-secondary text-on-primary flex items-center justify-center shadow-lg transition-transform active:scale-95"
           type="button"
           onClick={(e) => {
             e.preventDefault()

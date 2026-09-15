@@ -150,8 +150,8 @@ export default function FaqContactPage() {
                 <h3 className="font-headline-md text-headline-md font-bold uppercase tracking-tight text-on-surface mt-1">FORMULARIO DE CONTACTO</h3>
               </div>
               <div className="flex flex-col gap-4">
-                <input className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container uppercase placeholder:text-secondary-container" placeholder="NOMBRE COMPLETO" type="text" />
-                <input className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container uppercase placeholder:text-secondary-container" placeholder="EMAIL DE CONTACTO" type="email" />
+                <input className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container uppercase placeholder:text-on-surface-variant/70" placeholder="NOMBRE COMPLETO" type="text" />
+                <input className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container uppercase placeholder:text-on-surface-variant/70" placeholder="EMAIL DE CONTACTO" type="email" />
                 <div className="relative">
                   <select className="w-full appearance-none bg-surface-container font-label-mono text-body-sm px-4 py-3 pr-10 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container uppercase cursor-pointer">
                     <option value="">TIPO DE CONSULTA</option>
@@ -163,7 +163,7 @@ export default function FaqContactPage() {
                   </select>
                   <span className="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-sm text-on-surface-variant">expand_more</span>
                 </div>
-                <textarea className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container uppercase placeholder:text-secondary-container min-h-[120px] resize-none" placeholder="DESCRIBE TU CONSULTA EN DETALLE..."></textarea>
+                <textarea className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container uppercase placeholder:text-on-surface-variant/70 min-h-[120px] resize-none" placeholder="DESCRIBE TU CONSULTA EN DETALLE..."></textarea>
                 <button className="w-full py-3.5 bg-primary-container hover:bg-on-surface text-on-primary-container hover:text-surface font-headline-sm text-headline-sm uppercase font-bold tracking-tight transition-all shadow-md flex items-center justify-center gap-3" type="button">
                   <span className="material-symbols-outlined">send</span>
                   <span>ENVIAR TICKET</span>

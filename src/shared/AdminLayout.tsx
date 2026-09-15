@@ -111,7 +111,7 @@ export default function AdminLayout() {
             <div className="flex items-center bg-surface-container px-3 py-1.5 border border-outline-variant/40">
               <span className="material-symbols-outlined text-outline text-sm mr-2">terminal</span>
               <input
-                className="bg-transparent border-0 outline-none font-label-mono text-body-sm text-on-surface placeholder:text-secondary-container w-64"
+                className="bg-transparent border-0 outline-none font-label-mono text-body-sm text-on-surface placeholder:text-on-surface-variant/70 w-64"
                 placeholder="COMANDOS DE INVENTARIO..."
                 type="text"
               />

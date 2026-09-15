@@ -164,9 +164,9 @@ export default function HomePage() {
           .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         `}} />
 
-        <div className="flex lg:grid flex-nowrap lg:grid-cols-4 gap-4 lg:gap-6 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none pb-6 lg:pb-0 hide-scrollbar">
+        <div className="flex flex-nowrap gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-6 lg:pb-4 hide-scrollbar">
           {products.map(product => (
-            <div key={product.id} className="w-[80vw] sm:w-[45vw] lg:w-auto shrink-0 snap-center lg:snap-align-none">
+            <div key={product.id} className="w-[80vw] sm:w-[45vw] lg:w-[23%] shrink-0 snap-center lg:snap-align-start">
               <ProductCard
                 product={product}
                 onQuickAdd={(title) => showToast(title)}
@@ -190,12 +190,12 @@ export default function HomePage() {
           </div>
         </div>
         
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="flex flex-nowrap gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-6 lg:pb-4 hide-scrollbar">
           {categories.map((cat, idx) => (
             <Link
               to={`/catalogo?categoria=${cat.slug}`}
               key={cat.id}
-              className="group relative h-48 bg-surface-container overflow-hidden shadow-md flex items-center justify-center transition-all hover:-translate-y-1 hover:shadow-xl"
+              className="w-[70vw] sm:w-[40vw] lg:w-[23%] shrink-0 snap-center lg:snap-align-start group relative h-48 bg-surface-container overflow-hidden shadow-md flex items-center justify-center transition-all hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="absolute inset-0 bg-surface-container-high transition-transform group-hover:scale-105">
                 {/* Fallback pattern if no category image exists */}
@@ -228,9 +228,9 @@ export default function HomePage() {
             <span className="material-symbols-outlined text-[14px]">open_in_new</span>
           </Link>
         </div>
-        <div className="flex lg:grid flex-nowrap lg:grid-cols-4 gap-4 lg:gap-6 overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none pb-6 lg:pb-0 hide-scrollbar">
+        <div className="flex flex-nowrap gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-6 lg:pb-4 hide-scrollbar">
           {products.slice(1, 5).map(product => (
-            <div key={product.id} className="w-[80vw] sm:w-[45vw] lg:w-auto shrink-0 snap-center lg:snap-align-none">
+            <div key={product.id} className="w-[80vw] sm:w-[45vw] lg:w-[23%] shrink-0 snap-center lg:snap-align-start">
               <ProductCard
                 product={product}
                 onQuickAdd={(title) => showToast(title)}

@@ -19,7 +19,7 @@ const FAQ_ITEMS = [
   {
     id: '04',
     question: '¿Hacen envíos internacionales?',
-    answer: 'Sí, realizamos envíos a más de 40 países mediante DHL Express. El plazo estimado es de 3 a 5 días hábiles con rastreo completo. El costo de envío internacional es de $14.00 USD.',
+    answer: 'Sí, realizamos envíos a más de 40 países mediante DHL Express. El plazo estimado es de 3 a 5 días hábiles con rastreo completo. El costo de envío internacional es de Bs. 95.00.',
   },
   {
     id: '05',

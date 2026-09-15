@@ -7,7 +7,7 @@ import Toast, { useToast } from '../../../shared/Toast'
 export default function CatalogPage() {
   const [products, setProducts] = useState<ProductWithDetails[]>([])
   const [gridCols, setGridCols] = useState<3 | 4>(3)
-  const [priceMax, setPriceMax] = useState(75)
+  const [priceMax, setPriceMax] = useState(500)
   const { toast, showToast, hideToast } = useToast()
 
   useEffect(() => {
@@ -22,9 +22,9 @@ export default function CatalogPage() {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <span className="inline-block w-2 h-2 bg-primary-container"></span>
-              <span className="font-label-mono text-label-mono text-primary uppercase">CATALOG PROTOCOL // SYSTEM 04</span>
+              <span className="font-label-mono text-label-mono text-primary uppercase">PROTOCOLO CATÁLOGO // SISTEMA 04</span>
             </div>
-            <h1 className="font-headline-lg text-headline-lg font-bold text-on-surface uppercase tracking-tight">APPAREL ARCHIVE</h1>
+            <h1 className="font-headline-lg text-headline-lg font-bold text-on-surface uppercase tracking-tight">ARCHIVO DE PRENDAS</h1>
           </div>
           <div className="flex items-center gap-3 bg-surface-container px-3 py-2">
             <span className="material-symbols-outlined text-primary-container text-sm">inventory_2</span>
@@ -39,7 +39,7 @@ export default function CatalogPage() {
           <div className="flex items-center gap-3">
             <span className="font-label-mono text-label-mono text-primary font-bold">[ {products.length} PRENDAS ENCONTRADAS ]</span>
             <span className="hidden sm:inline text-secondary-container font-label-mono text-xs">/</span>
-            <span className="hidden sm:inline font-label-mono text-label-mono text-on-surface-variant">DROP LIMITADO ACTIVO</span>
+            <span className="hidden sm:inline font-label-mono text-label-mono text-on-surface-variant">COLECCIÓN LIMITADA ACTIVA</span>
           </div>
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-2">
@@ -109,16 +109,16 @@ export default function CatalogPage() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">COLOR SPECTRUM</span>
-                <span className="font-label-mono text-[10px] text-on-surface-variant">ALL</span>
+                <span className="font-label-mono text-[10px] text-on-surface-variant">TODOS</span>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { name: 'BLACK', bg: 'bg-black' },
-                  { name: 'WHITE', bg: 'bg-white' },
-                  { name: 'ORANGE', bg: 'bg-primary-container' },
-                  { name: 'OLIVE', bg: 'bg-[#4a5320]' },
-                  { name: 'GRAY', bg: 'bg-secondary-container' },
-                  { name: 'BLUE', bg: 'bg-[#0047ff]' },
+                  { name: 'NEGRO', bg: 'bg-black' },
+                  { name: 'BLANCO', bg: 'bg-white' },
+                  { name: 'NARANJA', bg: 'bg-primary-container' },
+                  { name: 'VERDE', bg: 'bg-[#4a5320]' },
+                  { name: 'GRIS', bg: 'bg-secondary-container' },
+                  { name: 'AZUL', bg: 'bg-[#0047ff]' },
                 ].map(color => (
                   <button key={color.name} className="group p-2 bg-surface-container flex flex-col items-center gap-1.5 hover:bg-surface-bright transition-colors text-left" type="button">
                     <span className={`w-5 h-5 rounded-full ${color.bg} shadow-sm`}></span>
@@ -132,14 +132,14 @@ export default function CatalogPage() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">RANGO DE PRECIO</span>
-                <span className="font-label-mono text-label-mono text-primary font-bold">${35} - ${priceMax} USD</span>
+                <span className="font-label-mono text-label-mono text-primary font-bold">Bs. {50} - Bs. {priceMax}</span>
               </div>
               <div className="flex flex-col gap-2">
-                <input className="w-full accent-primary-container bg-surface-container h-1 cursor-pointer" max="75" min="35" step="5" type="range" value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} />
+                <input className="w-full accent-primary-container bg-surface-container h-1 cursor-pointer" max="500" min="50" step="10" type="range" value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} />
                 <div className="flex justify-between font-label-mono text-[10px] text-on-surface-variant">
-                  <span>MIN: $35</span>
-                  <span>MED: $55</span>
-                  <span>MAX: $75</span>
+                  <span>MIN: Bs.50</span>
+                  <span>MED: Bs.250</span>
+                  <span>MAX: Bs.500</span>
                 </div>
               </div>
             </div>
@@ -148,13 +148,13 @@ export default function CatalogPage() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">COLECCIÓN / DROP</span>
-                <span className="font-label-mono text-[10px] text-primary-container animate-pulse">● LIVE</span>
+                <span className="font-label-mono text-[10px] text-primary-container animate-pulse">● EN VIVO</span>
               </div>
               <div className="flex flex-col gap-2 font-label-mono text-body-sm">
                 {[
-                  { name: 'Fall/Winter 25', tag: 'NEW', tagClass: 'text-primary-container' },
-                  { name: 'Nocturnal Core', tag: 'CORE', tagClass: 'text-on-surface-variant' },
-                  { name: 'Archive Re-issue', tag: 'ARCH', tagClass: 'text-on-surface-variant' },
+                  { name: 'Otoño/Invierno 25', tag: 'NUEVO', tagClass: 'text-primary-container' },
+                  { name: 'Colección Nocturnal', tag: 'CORE', tagClass: 'text-on-surface-variant' },
+                  { name: 'Reedición Archivo', tag: 'ARCH', tagClass: 'text-on-surface-variant' },
                 ].map((col, idx) => (
                   <label key={col.name} className="flex items-center justify-between cursor-pointer group bg-surface-container/50 hover:bg-surface-container px-2 py-1.5 transition-colors">
                     <span className="flex items-center gap-2">

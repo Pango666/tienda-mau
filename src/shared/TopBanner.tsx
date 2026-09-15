@@ -8,7 +8,7 @@ export default function TopBanner() {
         </span>
       </div>
       <p className="w-full md:w-auto text-center font-label-mono text-label-mono uppercase tracking-widest">
-        ENVÍO GRATIS EN PEDIDOS SUPERIORES A $65 | DROP EXCLUSIVO FW25
+        ENVÍO GRATIS EN PEDIDOS SUPERIORES A Bs. 450 | COLECCIÓN EXCLUSIVA FW25
       </p>
       <div className="hidden md:flex items-center gap-4">
         <span className="font-label-mono text-label-mono uppercase">[ REG: GLOBAL ]</span>

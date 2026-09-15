@@ -54,21 +54,21 @@ export default function HomePage() {
       {/* Ticker */}
       <div className="w-full bg-surface-container-lowest overflow-hidden py-2.5 shadow-sm select-none">
         <div className="flex whitespace-nowrap animate-marquee gap-8 font-label-mono text-label-mono uppercase text-secondary">
-          <span className="inline-flex items-center gap-2"><span className="w-2 h-2 bg-primary-container inline-block"></span> NEW DROP // LIMITED RUN</span>
+          <span className="inline-flex items-center gap-2"><span className="w-2 h-2 bg-primary-container inline-block"></span> NUEVA COLECCIÓN // EDICIÓN LIMITADA</span>
           <span>•</span>
-          <span className="text-on-surface">HEAVYWEIGHT ARCHITECTURAL TWILL</span>
+          <span className="text-on-surface">PRENDAS DE ALTA CALIDAD Y DISEÑO</span>
           <span>•</span>
-          <span className="inline-flex items-center gap-2 text-primary"><span className="material-symbols-outlined text-[14px]">local_shipping</span> FREE WORLDWIDE EXPRESS &gt; $65</span>
+          <span className="inline-flex items-center gap-2 text-primary"><span className="material-symbols-outlined text-[14px]">local_shipping</span> ENVÍO GRATIS NACIONAL &gt; Bs. 450</span>
           <span>•</span>
-          <span>OVERKAP CRAFT DIVISION // TOKYO • BERLIN • CDMX</span>
+          <span>OVERKAP CRAFT DIVISION // LA PAZ • COCHABAMBA • SANTA CRUZ</span>
           <span>•</span>
-          <span className="inline-flex items-center gap-2"><span className="w-2 h-2 bg-primary-container inline-block"></span> EDICION NUMERADA 01/300</span>
+          <span className="inline-flex items-center gap-2"><span className="w-2 h-2 bg-primary-container inline-block"></span> EDICIÓN NUMERADA 01/300</span>
           <span>•</span>
-          <span>NEW DROP // LIMITED RUN</span>
+          <span>NUEVA COLECCIÓN // EDICIÓN LIMITADA</span>
           <span>•</span>
-          <span className="text-on-surface">HEAVYWEIGHT ARCHITECTURAL TWILL</span>
+          <span className="text-on-surface">PRENDAS DE ALTA CALIDAD Y DISEÑO</span>
           <span>•</span>
-          <span className="text-primary">FREE WORLDWIDE EXPRESS &gt; $65</span>
+          <span className="text-primary">ENVÍO GRATIS NACIONAL &gt; Bs. 450</span>
           <span>•</span>
           <span>OVERKAP CRAFT DIVISION</span>
         </div>
@@ -82,11 +82,11 @@ export default function HomePage() {
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 bg-surface-container-highest px-3 py-1 text-on-surface-variant font-label-mono text-label-mono mb-6">
                 <span className="w-2 h-2 bg-primary-container"></span>
-                <span>SPEC: FW25-COLLECTION // ARCHIVE VERIFIED</span>
+                <span>SPEC: COLECCIÓN FW25 // ARCHIVO VERIFICADO</span>
               </div>
               <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-extrabold text-on-surface tracking-tighter uppercase mb-4 leading-none">
-                DROP 04 // <br className="hidden sm:inline" />
-                <span className="text-primary-container">NOCTURNAL</span> APPAREL
+                COLECCIÓN 04 // <br className="hidden sm:inline" />
+                <span className="text-primary-container">ROPA</span> URBANA
               </h1>
               <p className="font-body-lg text-body-lg text-secondary max-w-xl mb-8">
                 Streetwear apparel engineered for the concrete culture. Telas técnicas reforzadas, calce estructurado milimétrico e insignias reflectivas grado militar.
@@ -129,12 +129,12 @@ export default function HomePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-90 lg:opacity-75"></div>
             <div className="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm p-3 max-w-[200px]">
-              <span className="font-label-mono text-[9px] text-primary block">// STREET/CULTURE ARCHIVE</span>
+              <span className="font-label-mono text-[9px] text-primary block">// ARCHIVO CULTURA URBANA</span>
               <span className="font-headline-sm text-body-md font-bold text-on-surface uppercase tracking-tight">JADE ADESINA</span>
               <span className="font-label-mono text-[10px] text-secondary block mt-1">OCT/NOV 2025 ISS. 04</span>
             </div>
             <div className="absolute bottom-4 right-4 bg-primary-container text-on-primary-container px-3 py-1 font-label-mono text-label-mono uppercase font-bold tracking-widest shadow-md">
-              AUTHENTIC DROP
+              COLECCIÓN AUTÉNTICA
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default function HomePage() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="h-2 w-2 bg-primary-container inline-block"></span>
-              <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// HIGH DEMAND UNITS</span>
+              <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// UNIDADES DE ALTA DEMANDA</span>
             </div>
             <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-md font-extrabold text-on-surface uppercase tracking-tight">
               LO MÁS VENDIDO
@@ -210,11 +210,11 @@ export default function HomePage() {
           <div className="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 bg-primary-container text-on-primary-container px-3 py-1 font-label-mono text-label-mono font-bold uppercase tracking-wider mb-4">
-                <span>DROP PROTOCOL 05</span>
+                <span>COLECCIÓN PROTOCOLO 05</span>
               </div>
               <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-extrabold text-on-surface uppercase tracking-tight leading-none mb-4">
-                LIMITED EDITION // <br />
-                <span className="text-primary-container">STREET CULTURE</span>
+                EDICIÓN LIMITADA // <br />
+                <span className="text-primary-container">CULTURA URBANA</span>
               </h2>
               <p className="font-body-lg text-body-lg text-secondary max-w-xl mb-6">
                 Colección cápsula de 150 piezas numeradas con herrajes de titanio negro y bordado ultravioleta reactivo. Los registros cierran automáticamente al agotarse las reservas.
@@ -234,7 +234,7 @@ export default function HomePage() {
             <div className="lg:col-span-5 bg-surface-container-low/90 backdrop-blur-md p-6 lg:p-8 shadow-xl">
               <div className="flex items-center justify-between pb-4 mb-4">
                 <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// TIEMPO PARA ACTIVACIÓN</span>
-                <span className="font-label-mono text-[10px] text-outline">AUTO-DEPLOY</span>
+                <span className="font-label-mono text-[10px] text-outline">ACTIVACIÓN AUTOMÁTICA</span>
               </div>
               <div className="grid grid-cols-4 gap-2 text-center">
                 {[
@@ -265,7 +265,7 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 bg-primary-container inline-block"></span>
-            <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// STREET CULTURE RADAR</span>
+            <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// RADAR CULTURA URBANA</span>
           </div>
           <a className="font-label-mono text-label-mono text-secondary hover:text-on-surface uppercase flex items-center gap-1 transition-colors" href="#">
             <span>VER GALERÍA COMPLETA</span>

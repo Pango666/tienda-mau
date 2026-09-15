@@ -169,8 +169,8 @@ export default function ProductDetailPage() {
               {/* Price */}
               <div className="bg-surface-container p-4 flex items-baseline justify-between">
                 <div className="flex items-baseline gap-3">
-                  <span className="font-headline-lg text-headline-lg font-extrabold text-on-surface tracking-tight">${product.base_price.toFixed(2)}</span>
-                  <span className="font-label-mono text-body-sm text-tertiary uppercase">USD</span>
+                  <span className="font-headline-lg text-headline-lg font-extrabold text-on-surface tracking-tight">Bs. {product.base_price.toFixed(2)}</span>
+                  <span className="font-label-mono text-body-sm text-tertiary uppercase">BOB</span>
                 </div>
                 <div className="flex flex-col items-end">
                   <span className="bg-surface-container-high px-2 py-0.5 font-label-mono text-[10px] text-primary uppercase tracking-wider font-bold">IMPUESTOS INCLUIDOS</span>
@@ -307,7 +307,7 @@ export default function ProductDetailPage() {
                   ) : (
                     <>
                       <span className="material-symbols-outlined text-2xl font-bold">shopping_bag</span>
-                      <span>AÑADIR AL CARRITO — ${total} USD</span>
+                      <span>AÑADIR AL CARRITO — Bs. {total}</span>
                     </>
                   )}
                 </button>

@@ -37,17 +37,44 @@ export default function CatalogPage() {
     if (p.base_price > priceMax) return false;
     
     if (selectedColor) {
-      const hasColor = p.product_variants?.some(v => v.color.toLowerCase() === selectedColor.toLowerCase())
+      const hasColor = p.product_variants?.some(v => v.color.trim().toLowerCase() === selectedColor.toLowerCase())
       if (!hasColor) return false;
     }
     
     if (selectedSize) {
-      const hasSize = p.product_variants?.some(v => v.size.toLowerCase() === selectedSize.toLowerCase())
+      const hasSize = p.product_variants?.some(v => v.size.trim().toLowerCase() === selectedSize.toLowerCase())
       if (!hasSize) return false;
     }
     
     return true;
   })
+
+  // Dynamic filter options based on available products
+  const availableSizes = Array.from(new Set(
+    products.flatMap(p => p.product_variants?.map(v => v.size.trim().toUpperCase()) || [])
+  )).sort((a, b) => {
+    const numA = parseInt(a);
+    const numB = parseInt(b);
+    if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+    // For letter sizes, we might want a specific order, but alphabetical is fine for unknown ones
+    return a.localeCompare(b);
+  })
+
+  const availableColors = Array.from(new Set(
+    products.flatMap(p => p.product_variants?.map(v => v.color.trim().toUpperCase()) || [])
+  )).sort()
+
+  const colorMap: Record<string, string> = {
+    'NEGRO': 'bg-black',
+    'BLANCO': 'bg-white',
+    'NARANJA': 'bg-[#FF5625]',
+    'VERDE': 'bg-[#4a5320]',
+    'GRIS': 'bg-secondary-container',
+    'AZUL': 'bg-[#0047ff]',
+    'ROJO': 'bg-red-600',
+    'BEIGE': 'bg-[#EBE7DD]',
+    'CAFE': 'bg-[#5c4033]',
+  }
 
   return (
     <>
@@ -175,24 +202,23 @@ export default function CatalogPage() {
                 <span className="font-label-mono text-[10px] text-on-surface-variant">TODOS</span>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                {[
-                  { name: 'NEGRO', bg: 'bg-black' },
-                  { name: 'BLANCO', bg: 'bg-white' },
-                  { name: 'NARANJA', bg: 'bg-primary-container' },
-                  { name: 'VERDE', bg: 'bg-[#4a5320]' },
-                  { name: 'GRIS', bg: 'bg-secondary-container' },
-                  { name: 'AZUL', bg: 'bg-[#0047ff]' },
-                ].map(color => (
-                  <button 
-                    key={color.name} 
-                    className={`group p-2 bg-surface-container flex flex-col items-center gap-1.5 hover:bg-surface-bright transition-colors text-left ${selectedColor === color.name ? 'ring-2 ring-primary' : ''}`} 
-                    type="button"
-                    onClick={() => setSelectedColor(selectedColor === color.name ? null : color.name)}
-                  >
-                    <span className={`w-5 h-5 rounded-full ${color.bg} shadow-sm`}></span>
-                    <span className={`font-label-mono text-[10px] ${selectedColor === color.name ? 'text-primary' : 'text-on-surface-variant group-hover:text-on-surface'}`}>{color.name}</span>
-                  </button>
-                ))}
+                {availableColors.map(colorName => {
+                  const bgClass = colorMap[colorName] || 'bg-surface-container-highest'
+                  return (
+                    <button 
+                      key={colorName} 
+                      className={`group p-2 bg-surface-container flex flex-col items-center justify-center gap-1.5 hover:bg-surface-bright transition-colors text-center ${selectedColor === colorName ? 'ring-2 ring-primary' : ''}`} 
+                      type="button"
+                      onClick={() => setSelectedColor(selectedColor === colorName ? null : colorName)}
+                    >
+                      <span className={`w-5 h-5 rounded-full ${bgClass} shadow-sm border border-outline-variant/30`}></span>
+                      <span className={`font-label-mono text-[9px] break-all ${selectedColor === colorName ? 'text-primary font-bold' : 'text-on-surface-variant group-hover:text-on-surface'}`}>{colorName}</span>
+                    </button>
+                  )
+                })}
+                {availableColors.length === 0 && (
+                  <span className="font-label-mono text-[10px] text-on-surface-variant col-span-3">No hay colores disponibles</span>
+                )}
               </div>
             </div>
 
@@ -219,16 +245,19 @@ export default function CatalogPage() {
                 <span className="font-label-mono text-[10px] text-on-surface-variant">TODAS</span>
               </div>
               <div className="grid grid-cols-4 gap-2 font-label-mono text-body-sm">
-                {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                {availableSizes.map((size) => (
                   <button 
                     key={size}
                     type="button"
                     onClick={() => setSelectedSize(selectedSize === size ? null : size)}
-                    className={`flex items-center justify-center p-2 text-xs font-bold transition-colors border ${selectedSize === size ? 'border-primary bg-primary-container text-on-primary-container' : 'border-surface-container-high bg-surface-container/50 hover:bg-surface-container text-on-surface'}`}
+                    className={`flex items-center justify-center p-2 text-[11px] font-bold transition-colors border ${selectedSize === size ? 'border-primary bg-primary-container text-on-primary-container' : 'border-surface-container-high bg-surface-container/50 hover:bg-surface-container text-on-surface'}`}
                   >
                     {size}
                   </button>
                 ))}
+                {availableSizes.length === 0 && (
+                  <span className="font-label-mono text-[10px] text-on-surface-variant col-span-4">No hay tallas disponibles</span>
+                )}
               </div>
             </div>
 

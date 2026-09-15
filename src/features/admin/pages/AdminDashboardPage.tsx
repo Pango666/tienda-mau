@@ -335,46 +335,50 @@ export default function AdminDashboardPage() {
                         </div>
                       </td>
                       <td className="p-3">
-                        <div className="flex flex-col gap-1">
-                          {variants.slice(0, 3).map(v => (
-                            <div key={v.id} className="flex items-center gap-2">
-                              <span className="font-label-mono text-[10px] text-on-surface-variant">
-                                {v.size}/{v.color}
+                        <div className="flex flex-col gap-2">
+                          {variants.map(v => (
+                            <div key={v.id} className="flex flex-wrap items-center justify-between bg-surface-container-highest p-1.5 px-2">
+                              <span className="font-label-mono text-[11px] font-bold text-on-surface uppercase">
+                                {v.size} - {v.color}
                               </span>
                               {editingStock?.variantId === v.id ? (
                                 <div className="flex items-center gap-1">
                                   <input
                                     type="number"
-                                    className="w-16 bg-surface-container px-2 py-0.5 font-label-mono text-[11px] text-on-surface border border-primary-container"
+                                    className="w-14 bg-surface-container px-1 py-0.5 font-label-mono text-[11px] text-on-surface border border-primary text-center outline-none"
                                     value={editingStock.stock}
                                     onChange={e => setEditingStock({ ...editingStock, stock: Number(e.target.value) })}
                                     min={0}
                                   />
-                                  <button onClick={handleUpdateStock} className="text-primary hover:text-on-surface">
-                                    <span className="material-symbols-outlined text-[14px]">check</span>
+                                  <button onClick={handleUpdateStock} className="bg-primary text-white p-0.5 hover:bg-on-surface transition-colors">
+                                    <span className="material-symbols-outlined text-[14px] block">check</span>
                                   </button>
-                                  <button onClick={() => setEditingStock(null)} className="text-outline hover:text-on-surface">
-                                    <span className="material-symbols-outlined text-[14px]">close</span>
+                                  <button onClick={() => setEditingStock(null)} className="bg-outline text-white p-0.5 hover:bg-on-surface transition-colors">
+                                    <span className="material-symbols-outlined text-[14px] block">close</span>
                                   </button>
                                 </div>
                               ) : (
-                                <button
-                                  className="font-label-mono text-[10px] text-primary hover:underline"
-                                  onClick={() => setEditingStock({ variantId: v.id, stock: v.stock })}
-                                >
-                                  [{v.stock} u.]
-                                </button>
+                                <div className="flex items-center gap-2">
+                                  <span className={`font-label-mono text-[11px] font-bold ${v.stock === 0 ? 'text-error' : 'text-primary'}`}>
+                                    {v.stock} u.
+                                  </span>
+                                  <button
+                                    className="text-outline hover:text-primary transition-colors flex items-center"
+                                    onClick={() => setEditingStock({ variantId: v.id, stock: v.stock })}
+                                    title="Editar Stock"
+                                  >
+                                    <span className="material-symbols-outlined text-[16px]">edit</span>
+                                  </button>
+                                </div>
                               )}
                             </div>
                           ))}
-                          {variants.length > 3 && (
-                            <span className="font-label-mono text-[10px] text-outline">+{variants.length - 3} más</span>
-                          )}
                           <button
-                            className="font-label-mono text-[10px] text-primary hover:underline mt-1"
+                            className="font-label-mono text-[11px] bg-primary-container text-on-primary-container font-bold py-1.5 hover:bg-primary hover:text-white transition-colors flex items-center justify-center gap-1 w-full"
                             onClick={() => setShowVariantModal(product.id)}
                           >
-                            + AÑADIR VARIANTE
+                            <span className="material-symbols-outlined text-[14px]">add</span>
+                            AÑADIR VARIANTE
                           </button>
                         </div>
                       </td>

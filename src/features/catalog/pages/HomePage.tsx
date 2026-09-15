@@ -20,8 +20,8 @@ const PROMO_BG =
 export default function HomePage() {
   const [products, setProducts] = useState<ProductWithDetails[]>([])
   const { toast, showToast, hideToast } = useToast()
-
-  // Countdown timer state
+  
+  const latestProduct = products.length > 0 ? products[0] : null
   const [countdown, setCountdown] = useState({
     days: '02', hours: '14', mins: '38', secs: '52'
   })
@@ -78,63 +78,66 @@ export default function HomePage() {
       <section className="relative w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-6 lg:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           <div className="lg:col-span-7 flex flex-col justify-between bg-surface-container-low p-6 md:p-10 lg:p-12 shadow-xl relative overflow-hidden">
-            <div className="absolute right-4 top-4 font-label-mono text-[90px] text-surface-container-highest/20 font-black leading-none select-none pointer-events-none -z-0">04</div>
+            <div className="absolute right-4 top-4 font-label-mono text-[90px] text-surface-container-highest/20 font-black leading-none select-none pointer-events-none -z-0">01</div>
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 bg-surface-container-highest px-3 py-1 text-on-surface-variant font-label-mono text-label-mono mb-6">
-                <span className="w-2 h-2 bg-primary-container"></span>
-                <span>SPEC: COLECCIÓN FW25 // ARCHIVO VERIFICADO</span>
+                <span className="w-2 h-2 bg-primary-container animate-pulse"></span>
+                <span>NUEVO LANZAMIENTO // ITEM RECIENTE</span>
               </div>
               <h1 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg font-extrabold text-on-surface tracking-tighter uppercase mb-4 leading-none">
-                COLECCIÓN 04 // <br className="hidden sm:inline" />
-                <span className="text-primary-container">ROPA</span> URBANA
+                {latestProduct ? latestProduct.title : 'CARGANDO...'}
               </h1>
-              <p className="font-body-lg text-body-lg text-secondary max-w-xl mb-8">
-                Streetwear apparel engineered for the concrete culture. Telas técnicas reforzadas, calce estructurado milimétrico e insignias reflectivas grado militar.
+              <p className="font-body-lg text-body-lg text-secondary max-w-xl mb-8 line-clamp-3">
+                {latestProduct ? latestProduct.description : 'Buscando la prenda más reciente en la base de datos...'}
               </p>
               <div className="grid grid-cols-3 gap-3 mb-10 max-w-lg">
                 <div className="bg-surface-container p-3">
-                  <span className="block font-label-mono text-label-mono text-outline uppercase">SERIE</span>
-                  <span className="font-headline-sm text-headline-sm font-bold text-on-surface">300 PZ</span>
+                  <span className="block font-label-mono text-label-mono text-outline uppercase">MATERIAL</span>
+                  <span className="font-headline-sm text-[11px] font-bold text-on-surface truncate block mt-1" title={latestProduct?.material || ''}>
+                    {latestProduct?.material || '...'}
+                  </span>
                 </div>
                 <div className="bg-surface-container p-3">
-                  <span className="block font-label-mono text-label-mono text-outline uppercase">GRAMAJE</span>
-                  <span className="font-headline-sm text-headline-sm font-bold text-on-surface">420 GSM</span>
+                  <span className="block font-label-mono text-label-mono text-outline uppercase">PRECIO</span>
+                  <span className="font-headline-sm text-headline-sm font-bold text-on-surface mt-1 block">
+                    {latestProduct ? `Bs. ${latestProduct.base_price}` : '...'}
+                  </span>
                 </div>
                 <div className="bg-surface-container p-3">
                   <span className="block font-label-mono text-label-mono text-outline uppercase">STATUS</span>
-                  <span className="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-1">DISPONIBLE</span>
+                  <span className="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-1 mt-1">DISPONIBLE</span>
                 </div>
               </div>
             </div>
             <div className="relative z-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
               <Link
-                to="/catalogo"
-                className="bg-primary-container hover:bg-on-surface hover:text-surface text-on-primary-container font-headline-sm text-headline-sm px-8 py-4 uppercase font-bold tracking-tight text-center transition-colors shadow-md flex items-center justify-center gap-3 group"
+                to={latestProduct ? `/producto/${latestProduct.id}` : '#'}
+                className={`bg-primary-container hover:bg-on-surface hover:text-surface text-on-primary-container font-headline-sm text-headline-sm px-8 py-4 uppercase font-bold tracking-tight text-center transition-colors shadow-md flex items-center justify-center gap-3 group ${!latestProduct ? 'opacity-50 pointer-events-none' : ''}`}
               >
-                <span>VER COLECCIÓN</span>
+                <span>VER PRODUCTO</span>
                 <span className="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
               </Link>
-              <a className="bg-surface-container hover:bg-surface-container-high text-on-surface font-label-caps text-label-caps px-6 py-4 uppercase tracking-widest text-center transition-colors flex items-center justify-center gap-2" href="#lookbook-seccion">
-                <span className="material-symbols-outlined text-[18px]">photo_camera</span>
-                <span>LOOKBOOK FW25</span>
-              </a>
             </div>
           </div>
 
           <div className="lg:col-span-5 relative bg-surface-container-lowest min-h-[480px] lg:min-h-full overflow-hidden shadow-xl group">
-            <img
-              alt="Streetwear model wearing Nocturnal technical cap and tactical outerwear"
-              className="w-full h-full object-cover object-center filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-              src={HERO_IMAGE}
-            />
+            {latestProduct?.product_images?.[0]?.image_url ? (
+              <img
+                alt={latestProduct.title}
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-700"
+                src={latestProduct.product_images[0].image_url}
+              />
+            ) : (
+              <div className="w-full h-full bg-surface-container-high animate-pulse"></div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-90 lg:opacity-75"></div>
             <div className="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm p-3 max-w-[200px]">
-              <span className="font-label-mono text-[9px] text-primary block">// ARCHIVO CULTURA URBANA</span>
-              <span className="font-headline-sm text-body-md font-bold text-on-surface uppercase tracking-tight">JADE ADESINA</span>
-              <span className="font-label-mono text-[10px] text-secondary block mt-1">OCT/NOV 2025 ISS. 04</span>
+              <span className="font-label-mono text-[9px] text-primary block">// NUEVO INGRESO</span>
+              <span className="font-headline-sm text-body-md font-bold text-on-surface uppercase tracking-tight line-clamp-1">{latestProduct?.title || 'OVERKAP'}</span>
+              <span className="font-label-mono text-[10px] text-secondary block mt-1">ÚLTIMO REGISTRO</span>
             </div>
             <div className="absolute bottom-4 right-4 bg-primary-container text-on-primary-container px-3 py-1 font-label-mono text-label-mono uppercase font-bold tracking-widest shadow-md">
-              COLECCIÓN AUTÉNTICA
+              RECIÉN AÑADIDO
             </div>
           </div>
         </div>
@@ -144,9 +147,9 @@ export default function HomePage() {
       <section className="w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { icon: 'bolt', tag: '// DESPACHO PRIORITARIO', title: 'ENVÍOS RÁPIDOS 24/48H', desc: 'Rastreo satelital instantáneo y empaque termotellado a prueba de agua.' },
-            { icon: 'published_with_changes', tag: '// RETORNO SIN RIESGO', title: '30 DÍAS DEVOLUCIÓN', desc: 'Cambio directo por talle o reembolso inmediato si no resiste tu entorno.' },
-            { icon: 'lock', tag: '// SEGURIDAD CRIPTOGRÁFICA', title: 'PAGO SEGURO CIFRADO', desc: 'Transacciones blindadas de 256-bit: Apple Pay, Tarjetas y Criptoactivos.' },
+            { icon: 'verified', tag: '// CONFIANZA TOTAL', title: 'ENTREGAS GARANTIZADAS', desc: 'Rastreo completo de tu pedido en cada etapa hasta llegar a tus manos.' },
+            { icon: 'local_shipping', tag: '// COBERTURA NACIONAL', title: 'ENVÍOS NACIONALES', desc: 'Llegamos a todos los departamentos del país mediante Courier de confianza.' },
+            { icon: 'qr_code_2', tag: '// FÁCIL Y SEGURO', title: 'PAGOS EFECTIVO QR', desc: 'Realiza tu pago en segundos sin tarjetas, transferencia directa vía QR simple.' },
           ].map((item, idx) => (
             <div key={idx} className="bg-surface-container-low p-5 flex items-start gap-4 transition-colors hover:bg-surface-container">
               <div className="bg-surface-container-highest p-3 text-primary-container shrink-0">

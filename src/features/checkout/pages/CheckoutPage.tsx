@@ -132,7 +132,7 @@ export default function CheckoutPage() {
                       +
                     </button>
                   </div>
-                  <span className="font-headline-sm text-body-md font-bold text-primary-container">
+                  <span className="font-headline-sm text-body-md font-bold text-primary">
                     Bs.{(item.price * item.quantity).toFixed(2)}
                   </span>
                 </div>
@@ -219,7 +219,7 @@ export default function CheckoutPage() {
               <div className="h-px bg-outline-variant/30"></div>
               <div className="flex items-center justify-between">
                 <span className="font-headline-sm text-headline-sm font-bold text-on-surface uppercase">TOTAL</span>
-                <span className="font-headline-sm text-headline-sm font-bold text-primary-container">
+                <span className="font-headline-sm text-headline-sm font-bold text-primary">
                   Bs.{total.toFixed(2)}
                 </span>
               </div>

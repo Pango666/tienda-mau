@@ -133,7 +133,7 @@ export default function AdminOrdersPage() {
                   </div>
                   <div className="flex items-center gap-6">
                     <div className="text-right">
-                      <span className="font-headline-sm text-headline-sm font-bold text-primary-container block">
+                      <span className="font-headline-sm text-headline-sm font-bold text-primary block">
                         Bs.{Number(order.total_amount).toFixed(2)}
                       </span>
                       <span className="font-label-mono text-[10px] text-outline">

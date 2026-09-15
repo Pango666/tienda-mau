@@ -62,7 +62,7 @@ export default function CatalogPage() {
             <h1 className="font-headline-lg text-headline-lg font-bold text-on-surface uppercase tracking-tight">ARCHIVO DE PRENDAS</h1>
           </div>
           <div className="flex items-center gap-3 bg-surface-container px-3 py-2">
-            <span className="material-symbols-outlined text-primary-container text-sm">inventory_2</span>
+            <span className="material-symbols-outlined text-primary text-sm">inventory_2</span>
             <span className="font-label-mono text-label-mono text-on-surface-variant uppercase">STOCK DISPONIBLE // TEMPORADA FW25</span>
           </div>
         </div>
@@ -238,7 +238,7 @@ export default function CatalogPage() {
                 <span className="font-label-mono text-[10px] text-on-surface-variant uppercase">ENTREGA RÁPIDA</span>
                 <span className="font-headline-sm text-xs uppercase font-bold text-on-surface">PUNTOS DROP-OFF</span>
               </div>
-              <span className="material-symbols-outlined text-primary-container text-lg">local_shipping</span>
+              <span className="material-symbols-outlined text-primary text-lg">local_shipping</span>
             </div>
           </aside>
 

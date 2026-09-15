@@ -247,7 +247,7 @@ export default function ProductDetailPage() {
                   {selectedVariant && (
                     <div className="flex items-center gap-2 bg-surface-container px-2.5 py-1">
                       <span className="w-2 h-2 bg-primary-container animate-pulse"></span>
-                      <span className="font-label-mono text-[11px] text-primary-container font-bold uppercase">
+                      <span className="font-label-mono text-[11px] text-primary font-bold uppercase">
                         QUEDAN {selectedVariant.stock} UNIDADES
                       </span>
                     </div>

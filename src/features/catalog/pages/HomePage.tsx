@@ -120,7 +120,7 @@ export default function HomePage() {
             { icon: 'qr_code_2', tag: '// FÁCIL Y SEGURO', title: 'PAGOS EFECTIVO QR', desc: 'Realiza tu pago en segundos sin tarjetas, transferencia directa vía QR simple.' },
           ].map((item, idx) => (
             <div key={idx} className="bg-surface-container-low p-5 flex items-start gap-4 transition-colors hover:bg-surface-container">
-              <div className="bg-surface-container-highest p-3 text-primary-container shrink-0">
+              <div className="bg-surface-container-highest p-3 text-primary shrink-0">
                 <span className="material-symbols-outlined text-headline-sm">{item.icon}</span>
               </div>
               <div>

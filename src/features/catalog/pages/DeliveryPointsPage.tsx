@@ -56,7 +56,7 @@ export default function DeliveryPointsPage() {
         <div className="max-w-[1440px] mx-auto mt-10">
           <div className="bg-surface-container-high p-4 md:p-6 shadow-2xl flex flex-col md:flex-row gap-4 items-stretch justify-between">
             <div className="flex-1 relative flex items-center bg-surface-container-lowest px-4 py-3">
-              <span className="material-symbols-outlined text-primary-container mr-3 text-2xl">pin_drop</span>
+              <span className="material-symbols-outlined text-primary mr-3 text-2xl">pin_drop</span>
               <input className="w-full bg-transparent text-on-surface font-label-mono text-body-md placeholder:text-on-surface-variant/70 focus:outline-none uppercase" placeholder="BUSCAR POR NOMBRE O DIRECCIÓN..." type="text" />
             </div>
           </div>

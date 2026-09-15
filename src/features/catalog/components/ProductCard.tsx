@@ -57,7 +57,7 @@ export default function ProductCard({ product, onQuickAdd }: ProductCardProps) {
           <span className="font-label-mono text-sm font-bold text-on-surface">
             Bs. {product.base_price.toFixed(2)}
           </span>
-          <span className={`font-label-mono text-[10px] ${totalStock <= 5 ? 'text-primary-container' : 'text-on-surface-variant'}`}>
+          <span className={`font-label-mono text-[10px] ${totalStock <= 5 ? 'text-primary' : 'text-on-surface-variant'}`}>
             {totalStock <= 0 ? 'AGOTADO' : totalStock <= 5 ? `${totalStock} UNIDADES` : 'EN STOCK'}
           </span>
         </div>

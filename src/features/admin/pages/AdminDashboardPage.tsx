@@ -37,6 +37,7 @@ export default function AdminDashboardPage() {
     title: '',
     description: '',
     material: '',
+    care_instructions: '',
     base_price: 0,
     category_id: '',
   })
@@ -83,6 +84,7 @@ export default function AdminDashboardPage() {
       title: newProduct.title,
       description: newProduct.description || undefined,
       material: newProduct.material || undefined,
+      care_instructions: newProduct.care_instructions || undefined,
       base_price: newProduct.base_price,
       category_id: newProduct.category_id || undefined,
     })
@@ -95,7 +97,7 @@ export default function AdminDashboardPage() {
         }
       }
       setShowAddModal(false)
-      setNewProduct({ title: '', description: '', material: '', base_price: 0, category_id: '' })
+      setNewProduct({ title: '', description: '', material: '', care_instructions: '', base_price: 0, category_id: '' })
       setImageFile(null)
       await loadData()
     }
@@ -111,6 +113,7 @@ export default function AdminDashboardPage() {
       title: showEditModal.title,
       description: showEditModal.description || '',
       material: showEditModal.material || '',
+      care_instructions: showEditModal.care_instructions || '',
       base_price: showEditModal.base_price,
       category_id: showEditModal.category_id || undefined,
     })
@@ -598,6 +601,16 @@ export default function AdminDashboardPage() {
                   className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70 resize-none"
                 />
               </div>
+              <div className="flex flex-col gap-2">
+                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">CUIDADOS Y LAVADO</label>
+                <textarea
+                  value={newProduct.care_instructions}
+                  onChange={e => setNewProduct(p => ({ ...p, care_instructions: e.target.value }))}
+                  placeholder="EJ: LAVAR A MANO. NO USAR BLANQUEADOR."
+                  rows={2}
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70 resize-none"
+                />
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
                   <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">MATERIAL</label>
@@ -699,6 +712,16 @@ export default function AdminDashboardPage() {
                   onChange={e => setShowEditModal(p => p ? { ...p, description: e.target.value } : null)}
                   placeholder="DESCRIPCIÓN DEL PRODUCTO"
                   rows={3}
+                  className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70 resize-none"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">CUIDADOS Y LAVADO</label>
+                <textarea
+                  value={showEditModal.care_instructions || ''}
+                  onChange={e => setShowEditModal(p => p ? { ...p, care_instructions: e.target.value } : null)}
+                  placeholder="EJ: LAVAR A MANO. NO USAR BLANQUEADOR."
+                  rows={2}
                   className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70 resize-none"
                 />
               </div>

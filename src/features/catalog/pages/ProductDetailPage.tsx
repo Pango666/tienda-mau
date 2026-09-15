@@ -329,10 +329,25 @@ export default function ProductDetailPage() {
               {/* Accordions */}
               <div className="flex flex-col gap-2 pt-4">
                 {[
-                  { id: 'materials', title: '// MATERIALES Y COMPOSICIÓN', content: 'Elaborada con sarga densa de alta tenacidad que previene deformaciones por humedad o fricción continua.' },
-                  { id: 'care', title: '// GUÍA DE CUIDADOS & MANTENIMIENTO', content: 'Lavar únicamente a mano con paño húmedo y detergente neutro. No sumergir totalmente en agua.' },
-                  { id: 'shipping', title: '// ENVÍOS Y RETIROS LOCALES', content: 'Envíos certificados a todo el país vía logística prioritaria. Empaque anti-aplastamiento.' },
-                ].map(acc => (
+                  { 
+                    id: 'materials', 
+                    title: '// MATERIALES Y COMPOSICIÓN', 
+                    content: product.material || 'Información de materiales no especificada para este producto.',
+                    show: true
+                  },
+                  { 
+                    id: 'care', 
+                    title: '// GUÍA DE CUIDADOS & MANTENIMIENTO', 
+                    content: product.care_instructions || 'Lavar a mano con agua fría. No usar secadora.',
+                    show: true
+                  },
+                  { 
+                    id: 'shipping', 
+                    title: '// ENVÍOS Y RETIROS LOCALES', 
+                    content: 'Envíos certificados a todo el país vía logística prioritaria. Empaque anti-aplastamiento.',
+                    show: true
+                  },
+                ].filter(acc => acc.show).map(acc => (
                   <div key={acc.id} className="bg-surface-container overflow-hidden">
                     <button
                       className="w-full p-4 flex items-center justify-between text-left hover:bg-surface-container-high transition-colors"
@@ -345,7 +360,7 @@ export default function ProductDetailPage() {
                       </span>
                     </button>
                     {openAccordion === acc.id && (
-                      <div className="p-4 pt-0 text-body-sm text-on-surface-variant font-body-sm">
+                      <div className="p-4 pt-0 text-body-sm text-on-surface-variant font-body-sm whitespace-pre-wrap">
                         <p>{acc.content}</p>
                       </div>
                     )}

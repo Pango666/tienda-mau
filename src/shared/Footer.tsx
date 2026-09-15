@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import LOGO_URL from '../assets/logo.jpeg'
+import LOGO_URL from '../assets/logo.png'
 
 export default function Footer() {
   return (
@@ -10,10 +10,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-6 lg:col-span-6">
             <div className="flex items-center gap-2 mb-4">
-              <img alt="Wanted Lodge Logo" className="h-10 w-auto object-contain rounded-full" src={LOGO_URL} />
-              <span className="font-headline-sm text-headline-sm font-bold uppercase tracking-tight text-on-surface">
-                WANTED LODGE
-              </span>
+              <img alt="Wanted Lodge Logo" className="h-16 w-auto object-contain" src={LOGO_URL} />
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant max-w-xs">
               Apparel & Gear for the outdoors. Est. 2023. Gorras estructuradas y streetwear.

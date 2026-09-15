@@ -1,10 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useCartContext } from '../features/cart/context/CartContext'
 
-import LOGO_URL from '../assets/logo.jpeg'
-const PROFILE_URL =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDfDXOaAER6vXJVlJ4nHTGfTyy0E0K9d_WftF2rvLk5-ThJrAW6xTDXu44X2H-Kfv2GAG-EU3gmk_ISMoCjywGobCIcIYYUYULFvc9gIVooyoDDrQP3d9OPahGQs8m3o7QDNbNF__98s7IhHiMa2TwCFfMmVcaUGggTD0PGMilTzNXvqMFeNvBUHnAen8zgMqZ5z9Uu6tw13VmA7KqNabnxPKfmgmiPcTEgni5L3OvQih6gljpyeuTS'
-
+import LOGO_URL from '../assets/logo.png'
 interface NavLink {
   path: string
   label: string
@@ -27,15 +24,8 @@ export default function Navbar() {
       <div className="h-20 w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="flex items-center gap-6 shrink-0">
-          <Link to="/" className="flex items-center gap-3 relative group">
-            <img
-              src={LOGO_URL}
-              alt="Wanted Lodge Logo"
-              className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
-            />
-            <span className="font-headline-lg text-headline-sm font-bold tracking-tight text-on-surface uppercase hidden sm:block">
-              WANTED LODGE
-            </span>
+          <Link to="/" className="flex items-center gap-3 relative z-10 shrink-0">
+            <img alt="Wanted Lodge Logo" className="h-16 w-auto object-contain" src={LOGO_URL} />
           </Link>
         </div>
 
@@ -96,20 +86,6 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Profile */}
-          <div className="flex items-center pl-2 border-l border-outline-variant/30">
-            <button
-              aria-label="User Profile"
-              className="flex items-center gap-2 p-0.5 border border-outline-variant/40 hover:border-primary-container transition-colors"
-              type="button"
-            >
-              <img
-                alt="Profile"
-                className="w-8 h-8 rounded-none object-cover"
-                src={PROFILE_URL}
-              />
-            </button>
-          </div>
         </div>
       </div>
     </header>

@@ -1,7 +1,7 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../features/admin/context/AuthContext'
 
-import LOGO_URL from '../assets/logo.jpeg'
+import LOGO_URL from '../assets/logo.png'
 const SIDEBAR_LINKS = [
   { path: '/admin', label: 'VISTA GENERAL', icon: 'dashboard' },
   { path: '/admin/pedidos', label: 'PEDIDOS', icon: 'receipt_long' },
@@ -24,11 +24,8 @@ export default function AdminLayout() {
       <aside className="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/30 z-50 flex flex-col">
         {/* Logo */}
         <div className="h-20 px-6 flex items-center gap-3 border-b border-outline-variant/30">
-          <img alt="Wanted Lodge Logo" className="h-10 w-auto object-contain rounded-full" src={LOGO_URL} />
+          <img alt="Wanted Lodge Logo" className="h-16 w-auto object-contain" src={LOGO_URL} />
           <div className="flex flex-col">
-            <span className="font-headline-sm text-headline-sm font-bold uppercase tracking-tight text-on-surface">
-              WANTED LODGE
-            </span>
             <span className="font-label-mono text-[9px] text-primary tracking-widest uppercase">
               CONTROL MATRIX
             </span>

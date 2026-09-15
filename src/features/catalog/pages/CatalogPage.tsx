@@ -13,6 +13,8 @@ export default function CatalogPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     new URLSearchParams(location.search).get('categoria')
   )
+  const [selectedColor, setSelectedColor] = useState<string | null>(null)
+  const [selectedSize, setSelectedSize] = useState<string | null>(null)
   
   const [gridCols, setGridCols] = useState<3 | 4>(3)
   const [priceMax, setPriceMax] = useState(500)
@@ -33,6 +35,17 @@ export default function CatalogPage() {
   const filteredProducts = products.filter(p => {
     if (selectedCategory && p.category_id !== targetCategoryId) return false;
     if (p.base_price > priceMax) return false;
+    
+    if (selectedColor) {
+      const hasColor = p.product_variants?.some(v => v.color.toLowerCase() === selectedColor.toLowerCase())
+      if (!hasColor) return false;
+    }
+    
+    if (selectedSize) {
+      const hasSize = p.product_variants?.some(v => v.size.toLowerCase() === selectedSize.toLowerCase())
+      if (!hasSize) return false;
+    }
+    
     return true;
   })
 
@@ -111,6 +124,8 @@ export default function CatalogPage() {
                 onClick={() => {
                   setSelectedCategory(null)
                   setPriceMax(500)
+                  setSelectedColor(null)
+                  setSelectedSize(null)
                 }}
               >
                 LIMPIAR TODO
@@ -168,9 +183,14 @@ export default function CatalogPage() {
                   { name: 'GRIS', bg: 'bg-secondary-container' },
                   { name: 'AZUL', bg: 'bg-[#0047ff]' },
                 ].map(color => (
-                  <button key={color.name} className="group p-2 bg-surface-container flex flex-col items-center gap-1.5 hover:bg-surface-bright transition-colors text-left" type="button">
+                  <button 
+                    key={color.name} 
+                    className={`group p-2 bg-surface-container flex flex-col items-center gap-1.5 hover:bg-surface-bright transition-colors text-left ${selectedColor === color.name ? 'ring-2 ring-primary' : ''}`} 
+                    type="button"
+                    onClick={() => setSelectedColor(selectedColor === color.name ? null : color.name)}
+                  >
                     <span className={`w-5 h-5 rounded-full ${color.bg} shadow-sm`}></span>
-                    <span className="font-label-mono text-[10px] text-on-surface-variant group-hover:text-on-surface">{color.name}</span>
+                    <span className={`font-label-mono text-[10px] ${selectedColor === color.name ? 'text-primary' : 'text-on-surface-variant group-hover:text-on-surface'}`}>{color.name}</span>
                   </button>
                 ))}
               </div>
@@ -192,25 +212,22 @@ export default function CatalogPage() {
               </div>
             </div>
 
-            {/* Collection */}
+            {/* Size */}
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
-                <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">COLECCIÓN / DROP</span>
-                <span className="font-label-mono text-[10px] text-primary-container animate-pulse">● EN VIVO</span>
+                <span className="font-headline-sm text-xs uppercase font-bold text-on-surface tracking-wider">TALLA</span>
+                <span className="font-label-mono text-[10px] text-on-surface-variant">TODAS</span>
               </div>
-              <div className="flex flex-col gap-2 font-label-mono text-body-sm">
-                {[
-                  { name: 'Otoño/Invierno 25', tag: 'NUEVO', tagClass: 'text-primary-container' },
-                  { name: 'Colección Nocturnal', tag: 'CORE', tagClass: 'text-on-surface-variant' },
-                  { name: 'Reedición Archivo', tag: 'ARCH', tagClass: 'text-on-surface-variant' },
-                ].map((col, idx) => (
-                  <label key={col.name} className="flex items-center justify-between cursor-pointer group bg-surface-container/50 hover:bg-surface-container px-2 py-1.5 transition-colors">
-                    <span className="flex items-center gap-2">
-                      <input className="accent-primary-container cursor-pointer" name="collection" type="radio" defaultChecked={idx === 0} />
-                      <span className="text-on-surface group-hover:text-primary transition-colors">{col.name}</span>
-                    </span>
-                    <span className={`text-[10px] font-mono ${col.tagClass}`}>{col.tag}</span>
-                  </label>
+              <div className="grid grid-cols-4 gap-2 font-label-mono text-body-sm">
+                {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) => (
+                  <button 
+                    key={size}
+                    type="button"
+                    onClick={() => setSelectedSize(selectedSize === size ? null : size)}
+                    className={`flex items-center justify-center p-2 text-xs font-bold transition-colors border ${selectedSize === size ? 'border-primary bg-primary-container text-on-primary-container' : 'border-surface-container-high bg-surface-container/50 hover:bg-surface-container text-on-surface'}`}
+                  >
+                    {size}
+                  </button>
                 ))}
               </div>
             </div>

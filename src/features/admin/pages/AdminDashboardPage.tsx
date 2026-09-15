@@ -7,6 +7,8 @@ import {
   deleteProduct,
   updateVariantStock,
   createVariant,
+  updateVariant,
+  deleteVariant,
   createCategory,
   deleteCategory,
   uploadProductImage,
@@ -27,6 +29,7 @@ export default function AdminDashboardPage() {
   const [showAddModal, setShowAddModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState<ProductWithDetails | null>(null)
   const [showVariantModal, setShowVariantModal] = useState<string | null>(null)
+  const [showEditVariantModal, setShowEditVariantModal] = useState<any | null>(null)
   const [editingStock, setEditingStock] = useState<{ variantId: string; stock: number } | null>(null)
 
   // New product form
@@ -172,6 +175,32 @@ export default function AdminDashboardPage() {
     if (ok) {
       setShowVariantModal(null)
       setNewVariant({ size: '', color: '', stock: 0, sku: '' })
+      await loadData()
+    }
+  }
+
+  async function handleEditVariantSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!showEditVariantModal) return
+
+    const ok = await updateVariant(showEditVariantModal.id, {
+      size: showEditVariantModal.size,
+      color: showEditVariantModal.color,
+      stock: showEditVariantModal.stock,
+      sku: showEditVariantModal.sku || undefined,
+    })
+
+    if (ok) {
+      setShowEditVariantModal(null)
+      await loadData()
+    }
+  }
+
+  async function handleDeleteVariant(id: string) {
+    if (!confirm('¿Seguro que deseas eliminar esta variante por completo?')) return
+    const ok = await deleteVariant(id)
+    if (ok) {
+      setShowEditVariantModal(null)
       await loadData()
     }
   }
@@ -364,8 +393,15 @@ export default function AdminDashboardPage() {
                                   </span>
                                   <button
                                     className="text-outline hover:text-primary transition-colors flex items-center"
+                                    onClick={() => setShowEditVariantModal(v)}
+                                    title="Editar Variante Completa"
+                                  >
+                                    <span className="material-symbols-outlined text-[16px]">settings</span>
+                                  </button>
+                                  <button
+                                    className="text-outline hover:text-primary transition-colors flex items-center"
                                     onClick={() => setEditingStock({ variantId: v.id, stock: v.stock })}
-                                    title="Editar Stock"
+                                    title="Editar Stock Rápido"
                                   >
                                     <span className="material-symbols-outlined text-[16px]">edit</span>
                                   </button>
@@ -786,6 +822,84 @@ export default function AdminDashboardPage() {
               >
                 CREAR VARIANTE
               </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Variant Modal */}
+      {showEditVariantModal && (
+        <div className="fixed inset-0 z-50 bg-surface-container-lowest/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-surface-container-high max-w-md w-full p-6 md:p-8 flex flex-col gap-6 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="font-label-mono text-label-mono text-primary uppercase font-bold tracking-widest">// EDICIÓN DE VARIANTE</span>
+                <h3 className="font-headline-md text-headline-md text-on-surface uppercase font-bold">MODIFICAR SKU</h3>
+              </div>
+              <button className="p-2 bg-surface-container text-on-surface hover:bg-primary-container hover:text-on-primary-container transition-colors" onClick={() => setShowEditVariantModal(null)} type="button">
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
+            <form onSubmit={handleEditVariantSubmit} className="flex flex-col gap-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">TALLA *</label>
+                  <input
+                    type="text"
+                    value={showEditVariantModal.size}
+                    onChange={e => setShowEditVariantModal({ ...showEditVariantModal, size: e.target.value })}
+                    required
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">COLOR *</label>
+                  <input
+                    type="text"
+                    value={showEditVariantModal.color}
+                    onChange={e => setShowEditVariantModal({ ...showEditVariantModal, color: e.target.value })}
+                    required
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">STOCK *</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={showEditVariantModal.stock}
+                    onChange={e => setShowEditVariantModal({ ...showEditVariantModal, stock: Number(e.target.value) })}
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">SKU</label>
+                  <input
+                    type="text"
+                    value={showEditVariantModal.sku || ''}
+                    onChange={e => setShowEditVariantModal({ ...showEditVariantModal, sku: e.target.value })}
+                    className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all uppercase"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-4 mt-4">
+                <button
+                  type="button"
+                  onClick={() => handleDeleteVariant(showEditVariantModal.id)}
+                  className="flex-1 py-3 bg-error-container text-on-error-container hover:bg-error hover:text-white font-headline-sm text-headline-sm font-bold uppercase tracking-tight transition-all shadow-md"
+                >
+                  ELIMINAR
+                </button>
+                <button
+                  type="submit"
+                  className="flex-[2] py-3 bg-primary-container text-on-primary-container hover:bg-white hover:text-surface font-headline-sm text-headline-sm font-bold uppercase tracking-tight transition-all shadow-md"
+                >
+                  GUARDAR CAMBIOS
+                </button>
+              </div>
             </form>
           </div>
         </div>

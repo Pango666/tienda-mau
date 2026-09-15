@@ -247,6 +247,37 @@ export async function updateVariantStock(variantId: string, stock: number): Prom
   return true
 }
 
+export async function updateVariant(variantId: string, updates: Partial<{
+  size: string
+  color: string
+  stock: number
+  sku: string
+}>): Promise<boolean> {
+  const { error } = await supabase
+    .from('product_variants')
+    .update(updates)
+    .eq('id', variantId)
+
+  if (error) {
+    console.error('Error updating variant:', error)
+    return false
+  }
+  return true
+}
+
+export async function deleteVariant(variantId: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('product_variants')
+    .delete()
+    .eq('id', variantId)
+
+  if (error) {
+    console.error('Error deleting variant:', error)
+    return false
+  }
+  return true
+}
+
 // ─── Orders ───
 
 export async function fetchOrders(): Promise<OrderWithDetails[]> {

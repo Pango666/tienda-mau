@@ -102,7 +102,7 @@ export default function ProductDetailPage() {
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-8 md:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-gutter-desktop items-start">
           {/* Left: Images */}
-          <div className="lg:col-span-7 flex flex-col gap-4">
+          <div className="lg:col-span-5 flex flex-col gap-4">
             <div className="relative w-full aspect-[4/5] bg-surface-container-lowest overflow-hidden group">
               <img
                 className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105 select-none"
@@ -143,7 +143,7 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Right: Purchase Terminal */}
-          <div className="lg:col-span-5 flex flex-col">
+          <div className="lg:col-span-7 flex flex-col">
             <div className="bg-surface-container-low p-6 md:p-8 flex flex-col gap-6">
               {/* Breadcrumbs */}
               <div className="flex items-center justify-between gap-2">

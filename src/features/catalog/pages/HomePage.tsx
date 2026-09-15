@@ -5,12 +5,6 @@ import type { ProductWithDetails, Category } from '../../../types'
 import ProductCard from '../components/ProductCard'
 import Toast, { useToast } from '../../../shared/Toast'
 
-const LOOKBOOK_IMAGES = [
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuBzoYhzxUZ1G9aJ6WWBoXP4skVAFEFv0H9lDzW9n6_F0T9r7LvVLWn2kf8tP7GEb1DVGKHa7ALjwFRNgiLYyfIM5G4Ab6N7FIcupp52fZ-JJ0g5QcG_4VcttrcSDbn2sYgvJLjc_nndiaoA2D4_PEzgLviEXCkxBMl-l_r5HS_E-nb63azfVJB3av2s9qy72e3AGFqcGGYbX6GvClGjo_VAfo7pWN1vfQLBrHiT7iNx35DFjc8rWsyk',
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDf6d5HemDo9z0zEARajtXU7nqovC7zkY2WX7x3kL6XnJ43WUKz_7aiX1BKivEWuYiaNsTDb8h9iZL2HuAh6xiiVlJwz0ea1ZqU0DibbEe6mADb54QFU4GhPGcWkwetIz0S62alf0IjJkUJhFT7KpsLnWD12m3WE-n8Dn1gzhg8NHAc6PRpIO9YEqDUdSv7f_QZJ4JiCYysoocENiX0Noq4NyPscy0sNaRHgwYmG3pr34TorcForqIC',
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDZFoweByYtqkGSA_JxSJoW0y_TtB8tSW7dc6JE1YLnvAlpxH6AoXUESpkSE68bo-IW25yyf8CFg3_n2byP-fJl2WlKLV0b6h5o3jrWnI-MfCiGVW9nQieNerKjPJH6NLwKtKLVVmc1565sYFyI-_h-F9yV1221R_9Cf1dKRrAnPvwFEPOudiC-VEIul7OTilztxA0-w7bY05auMQyGDllwTRqGfH360MK3NgM7FZkS8rGsCzsuCz9V',
-]
-
 export default function HomePage() {
   const [products, setProducts] = useState<ProductWithDetails[]>([])
   const { toast, showToast, hideToast } = useToast()
@@ -19,7 +13,7 @@ export default function HomePage() {
   const [categories, setCategories] = useState<Category[]>([])
 
   useEffect(() => {
-    fetchProducts().then(data => setProducts(data.slice(0, 4)))
+    fetchProducts().then(data => setProducts(data.slice(0, 5)))
     fetchCategories().then(data => setCategories(data))
   }, [])
 
@@ -216,32 +210,25 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Lookbook */}
+      {/* Latest Arrivals */}
       <section className="w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 bg-primary-container inline-block"></span>
-            <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// RADAR CULTURA URBANA</span>
+            <span className="font-label-mono text-label-mono uppercase text-primary tracking-widest">// ÚLTIMOS INGRESOS</span>
           </div>
-          <a className="font-label-mono text-label-mono text-secondary hover:text-on-surface uppercase flex items-center gap-1 transition-colors" href="#">
-            <span>VER GALERÍA COMPLETA</span>
+          <Link className="font-label-mono text-label-mono text-secondary hover:text-on-surface uppercase flex items-center gap-1 transition-colors" to="/catalogo">
+            <span>VER CATÁLOGO COMPLETO</span>
             <span className="material-symbols-outlined text-[14px]">open_in_new</span>
-          </a>
+          </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {[
-            { img: LOOKBOOK_IMAGES[0], tag: '// 01 • SUBTERRÁNEO', title: 'Estética Cruda de Trinchera' },
-            { img: LOOKBOOK_IMAGES[1], tag: '// 02 • MACRO TEXTURA', title: 'Bordado Táctico 3D' },
-            { img: LOOKBOOK_IMAGES[2], tag: '// 03 • ROOFTOP CULTURE', title: 'Comunidad OVERKAP Global' },
-          ].map((item, idx) => (
-            <div key={idx} className="relative h-80 bg-surface-container overflow-hidden group shadow-md">
-              <img className="w-full h-full object-cover filter contrast-125 group-hover:scale-105 transition-transform duration-500" src={item.img} alt={item.title} />
-              <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent"></div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <span className="font-label-mono text-[9px] text-primary block">{item.tag}</span>
-                <h4 className="font-headline-sm text-body-lg font-bold text-on-surface uppercase">{item.title}</h4>
-              </div>
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.slice(1, 5).map(product => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onQuickAdd={(title) => showToast(title)}
+            />
           ))}
         </div>
       </section>

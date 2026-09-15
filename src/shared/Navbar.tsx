@@ -1,9 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useCartContext } from '../features/cart/context/CartContext'
 
-const LOGO_URL =
-  'https://lh3.googleusercontent.com/aida/AEtjO1UYq7ZlpuPFWfKgRhVlscqZTRODPH7iHddG6Vl79gQOjkgRo1Ot52UoL-xpKixDA710r77IgzI76vl7BgAEFjszMoJz7zycf1h0Eu0nBXbnpSs7m60YHFM3liThne8uhEBBvaN_5_ig2J9GtcCYzkRQZ0U3bjtILbh75U9fdG3WFLlivx8BxEr3ZkJhTjhMOngXWVka4ZSVn9v55o0IBt37NckuDCXXL-0fbBsOKPzUTJTe0epblGdCSw'
-
+import LOGO_URL from '../assets/logo.jpeg'
 const PROFILE_URL =
   'https://lh3.googleusercontent.com/aida-public/AB6AXuDfDXOaAER6vXJVlJ4nHTGfTyy0E0K9d_WftF2rvLk5-ThJrAW6xTDXu44X2H-Kfv2GAG-EU3gmk_ISMoCjywGobCIcIYYUYULFvc9gIVooyoDDrQP3d9OPahGQs8m3o7QDNbNF__98s7IhHiMa2TwCFfMmVcaUGggTD0PGMilTzNXvqMFeNvBUHnAen8zgMqZ5z9Uu6tw13VmA7KqNabnxPKfmgmiPcTEgni5L3OvQih6gljpyeuTS'
 
@@ -29,20 +27,15 @@ export default function Navbar() {
       <div className="h-20 w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="flex items-center gap-6 shrink-0">
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center gap-3 relative group">
             <img
-              alt="OVERKAP Streetwear Logo"
-              className="h-8 w-auto object-contain"
               src={LOGO_URL}
+              alt="Wanted Lodge Logo"
+              className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
             />
-            <div className="flex flex-col">
-              <span className="font-headline-sm text-headline-sm font-bold tracking-tighter uppercase text-on-surface group-hover:text-primary transition-colors">
-                OVERKAP
-              </span>
-              <span className="font-label-mono text-[9px] tracking-widest text-outline -mt-1 uppercase">
-                TECHNICAL WEAR
-              </span>
-            </div>
+            <span className="font-headline-lg text-headline-sm font-bold tracking-tight text-on-surface uppercase hidden sm:block">
+              WANTED LODGE
+            </span>
           </Link>
         </div>
 

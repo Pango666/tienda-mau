@@ -28,9 +28,9 @@ export default function HomePage() {
           <span>•</span>
           <span className="inline-flex items-center gap-2 text-primary"><span className="material-symbols-outlined text-[14px]">local_shipping</span> ENVÍO GRATIS NACIONAL &gt; Bs. 450</span>
           <span>•</span>
-          <span>OVERKAP CRAFT DIVISION // LA PAZ • COCHABAMBA • SANTA CRUZ</span>
+          <span>WANTED LODGE FOR APPAREL & GEAR // LA PAZ • COCHABAMBA • SANTA CRUZ</span>
           <span>•</span>
-          <span className="inline-flex items-center gap-2"><span className="w-2 h-2 bg-primary-container inline-block"></span> EDICIÓN NUMERADA 01/300</span>
+          <span className="inline-flex items-center gap-2"><span className="w-2 h-2 bg-primary-container inline-block"></span> EST. 2023</span>
           <span>•</span>
           <span>NUEVA COLECCIÓN // EDICIÓN LIMITADA</span>
           <span>•</span>
@@ -38,7 +38,7 @@ export default function HomePage() {
           <span>•</span>
           <span className="text-primary">ENVÍO GRATIS NACIONAL &gt; Bs. 450</span>
           <span>•</span>
-          <span>OVERKAP CRAFT DIVISION</span>
+          <span>WANTED LODGE FOR APPAREL & GEAR</span>
         </div>
       </div>
 
@@ -58,7 +58,7 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-90 lg:opacity-75"></div>
             <div className="absolute top-4 left-4 bg-surface-container-lowest/90 backdrop-blur-sm p-3 max-w-[200px]">
               <span className="font-label-mono text-[9px] text-primary block">// {latestProduct?.category_id ? categories.find(c => c.id === latestProduct.category_id)?.name.toUpperCase() : 'NUEVO INGRESO'}</span>
-              <span className="font-headline-sm text-body-md font-bold text-on-surface uppercase tracking-tight line-clamp-1">{latestProduct?.title || 'OVERKAP'}</span>
+              <span className="font-headline-sm text-body-md font-bold text-on-surface uppercase tracking-tight line-clamp-1">{latestProduct?.title || 'WANTED LODGE'}</span>
               <span className="font-label-mono text-[10px] text-secondary block mt-1">ÚLTIMO REGISTRO</span>
             </div>
             <div className="absolute bottom-4 right-4 bg-primary-container text-on-primary-container px-3 py-1 font-label-mono text-label-mono uppercase font-bold tracking-widest shadow-md">

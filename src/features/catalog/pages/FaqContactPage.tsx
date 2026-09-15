@@ -13,7 +13,7 @@ const FAQ_ITEMS = [
   },
   {
     id: '03',
-    question: '¿Cómo verifico la autenticidad de mi gorra OVERKAP?',
+    question: '¿Cómo verifico la autenticidad de mi gorra WANTED LODGE?',
     answer: 'Cada gorra incluye un precinto holográfico de seguridad en la visera y una etiqueta serializada con código QR. Escanea el código para acceder al certificado de autenticidad digital.',
   },
   {
@@ -46,7 +46,7 @@ export default function FaqContactPage() {
               CENTRO DE AYUDA & CONTACTO // PROTOCOL
             </h1>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
-              Envíos, cambios, devoluciones y soporte directo del equipo OVERKAP. Resolvemos incidencias técnicas, logísticas y consultas sobre lanzamientos numerados.
+              Envíos, cambios, devoluciones y soporte directo del equipo WANTED LODGE. Resolvemos incidencias técnicas, logísticas y consultas sobre lanzamientos numerados.
             </p>
           </div>
           <div className="flex items-center gap-4 bg-surface-container-high px-5 py-3 shadow-md self-start md:self-auto">

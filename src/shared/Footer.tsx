@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 
-const LOGO_URL =
-  'https://lh3.googleusercontent.com/aida/AEtjO1UYq7ZlpuPFWfKgRhVlscqZTRODPH7iHddG6Vl79gQOjkgRo1Ot52UoL-xpKixDA710r77IgzI76vl7BgAEFjszMoJz7zycf1h0Eu0nBXbnpSs7m60YHFM3liThne8uhEBBvaN_5_ig2J9GtcCYzkRQZ0U3bjtILbh75U9fdG3WFLlivx8BxEr3ZkJhTjhMOngXWVka4ZSVn9v55o0IBt37NckuDCXXL-0fbBsOKPzUTJTe0epblGdCSw'
+import LOGO_URL from '../assets/logo.jpeg'
 
 export default function Footer() {
   return (
@@ -11,13 +10,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-6 lg:col-span-6">
             <div className="flex items-center gap-2 mb-4">
-              <img alt="OVERKAP Streetwear Logo" className="h-6 w-auto object-contain" src={LOGO_URL} />
+              <img alt="Wanted Lodge Logo" className="h-10 w-auto object-contain rounded-full" src={LOGO_URL} />
               <span className="font-headline-sm text-headline-sm font-bold uppercase tracking-tight text-on-surface">
-                OVERKAP
+                WANTED LODGE
               </span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant max-w-xs">
-              Arquitectura urbana, gorras estructuradas y streetwear de alto gramaje para entornos hostiles.
+              Apparel & Gear for the outdoors. Est. 2023. Gorras estructuradas y streetwear.
             </p>
           </div>
 
@@ -47,7 +46,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 font-label-mono text-[11px] text-outline">
           <div className="flex items-center gap-3">
-            <span>© 2025 OVERKAP CLOTHING DIVISION. ALL RIGHTS RESERVED.</span>
+            <span>© 2025 WANTED LODGE FOR APPAREL & GEAR. ALL RIGHTS RESERVED.</span>
             <span className="hidden md:inline">//</span>
             <span className="uppercase">FABRICADO PARA EL PAVIMENTO</span>
           </div>

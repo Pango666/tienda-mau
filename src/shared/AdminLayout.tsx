@@ -1,9 +1,7 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../features/admin/context/AuthContext'
 
-const LOGO_URL =
-  'https://lh3.googleusercontent.com/aida/AEtjO1UYq7ZlpuPFWfKgRhVlscqZTRODPH7iHddG6Vl79gQOjkgRo1Ot52UoL-xpKixDA710r77IgzI76vl7BgAEFjszMoJz7zycf1h0Eu0nBXbnpSs7m60YHFM3liThne8uhEBBvaN_5_ig2J9GtcCYzkRQZ0U3bjtILbh75U9fdG3WFLlivx8BxEr3ZkJhTjhMOngXWVka4ZSVn9v55o0IBt37NckuDCXXL-0fbBsOKPzUTJTe0epblGdCSw'
-
+import LOGO_URL from '../assets/logo.jpeg'
 const SIDEBAR_LINKS = [
   { path: '/admin', label: 'VISTA GENERAL', icon: 'dashboard' },
   { path: '/admin/pedidos', label: 'PEDIDOS', icon: 'receipt_long' },
@@ -26,10 +24,10 @@ export default function AdminLayout() {
       <aside className="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest border-r border-outline-variant/30 z-50 flex flex-col">
         {/* Logo */}
         <div className="h-20 px-6 flex items-center gap-3 border-b border-outline-variant/30">
-          <img alt="OVERKAP Streetwear Logo" className="h-7 w-auto object-contain" src={LOGO_URL} />
+          <img alt="Wanted Lodge Logo" className="h-10 w-auto object-contain rounded-full" src={LOGO_URL} />
           <div className="flex flex-col">
             <span className="font-headline-sm text-headline-sm font-bold uppercase tracking-tight text-on-surface">
-              OVERKAP
+              WANTED LODGE
             </span>
             <span className="font-label-mono text-[9px] text-primary tracking-widest uppercase">
               CONTROL MATRIX

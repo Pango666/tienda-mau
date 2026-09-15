@@ -32,6 +32,11 @@ export default function CatalogPage() {
   
   const targetCategoryId = selectedCategory ? categories.find(c => c.slug === selectedCategory)?.id : null;
 
+  const productsInCategory = products.filter(p => {
+    if (selectedCategory && p.category_id !== targetCategoryId) return false;
+    return true;
+  });
+
   const filteredProducts = products.filter(p => {
     if (selectedCategory && p.category_id !== targetCategoryId) return false;
     if (p.base_price > priceMax) return false;
@@ -49,19 +54,18 @@ export default function CatalogPage() {
     return true;
   })
 
-  // Dynamic filter options based on available products
+  // Dynamic filter options based on products in the current category
   const availableSizes = Array.from(new Set(
-    products.flatMap(p => p.product_variants?.map(v => v.size.trim().toUpperCase()) || [])
+    productsInCategory.flatMap(p => p.product_variants?.map(v => v.size.trim().toUpperCase()) || [])
   )).sort((a, b) => {
     const numA = parseInt(a);
     const numB = parseInt(b);
     if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
-    // For letter sizes, we might want a specific order, but alphabetical is fine for unknown ones
     return a.localeCompare(b);
   })
 
   const availableColors = Array.from(new Set(
-    products.flatMap(p => p.product_variants?.map(v => v.color.trim().toUpperCase()) || [])
+    productsInCategory.flatMap(p => p.product_variants?.map(v => v.color.trim().toUpperCase()) || [])
   )).sort()
 
   const numericSizes = availableSizes.filter(s => !isNaN(Number(s)))

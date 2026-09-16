@@ -197,7 +197,15 @@ export async function createProductImage(productId: string, imageUrl: string, is
   return true
 }
 
-export async function deleteProductImage(imageId: string): Promise<boolean> {
+export async function deleteProductImage(imageId: string, imageUrl?: string): Promise<boolean> {
+  if (imageUrl) {
+    const fileName = imageUrl.split('/').pop()
+    if (fileName) {
+      // Intentar borrar del bucket, no bloquea si falla
+      await supabase.storage.from('product-images').remove([fileName])
+    }
+  }
+
   const { error } = await supabase
     .from('product_images')
     .delete()

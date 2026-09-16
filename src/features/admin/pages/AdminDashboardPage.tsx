@@ -13,6 +13,7 @@ import {
   deleteCategory,
   uploadProductImage,
   createProductImage,
+  deleteProductImage,
   type DashboardStats,
 } from '../services/adminService'
 import { fetchCategories } from '../../catalog/services/catalogService'
@@ -152,6 +153,22 @@ export default function AdminDashboardPage() {
     if (!confirm('¿Estás seguro de eliminar este producto?')) return
     const ok = await deleteProduct(id)
     if (ok) await loadData()
+  }
+
+  async function handleDeleteImage(imageId: string, imageUrl: string) {
+    if (!confirm('¿Seguro que deseas eliminar esta imagen?')) return
+    setIsUploading(true)
+    const ok = await deleteProductImage(imageId, imageUrl)
+    if (ok) {
+      if (showEditModal) {
+        setShowEditModal({
+          ...showEditModal,
+          product_images: showEditModal.product_images?.filter(img => img.id !== imageId)
+        })
+      }
+      await loadData()
+    }
+    setIsUploading(false)
   }
 
   async function handleUpdateStock() {
@@ -750,8 +767,30 @@ export default function AdminDashboardPage() {
                   />
                 </div>
               </div>
+              
+              {showEditModal.product_images && showEditModal.product_images.length > 0 && (
+                <div className="flex flex-col gap-2 mt-2">
+                  <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">IMÁGENES ACTUALES</label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {showEditModal.product_images.map(img => (
+                      <div key={img.id} className="relative group bg-surface-container aspect-square shadow-sm">
+                        <img src={img.image_url} alt="Producto" className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteImage(img.id, img.image_url)}
+                          className="absolute top-1 right-1 bg-error-container text-on-error-container p-1 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-error hover:text-white"
+                          title="Eliminar imagen"
+                        >
+                          <span className="material-symbols-outlined text-[14px]">delete</span>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="flex flex-col gap-2 mt-2">
-                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">NUEVA IMAGEN (Reemplazar)</label>
+                <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">AÑADIR NUEVA IMAGEN</label>
                 <input
                   type="file"
                   accept="image/*"

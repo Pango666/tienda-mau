@@ -166,7 +166,7 @@ export default function HomePage() {
 
         <div className="flex flex-nowrap gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-6 lg:pb-4 hide-scrollbar">
           {products.map(product => (
-            <div key={product.id} className="w-[80vw] sm:w-[45vw] lg:w-[23%] shrink-0 snap-center lg:snap-align-start">
+            <div key={product.id} className="w-[65vw] sm:w-[45vw] lg:w-[23%] shrink-0 snap-center lg:snap-align-start">
               <ProductCard
                 product={product}
                 onQuickAdd={(title) => showToast(title)}
@@ -195,7 +195,7 @@ export default function HomePage() {
             <Link
               to={`/catalogo?categoria=${cat.slug}`}
               key={cat.id}
-              className="w-[70vw] sm:w-[40vw] lg:w-[23%] shrink-0 snap-center lg:snap-align-start group relative h-48 bg-surface-container overflow-hidden shadow-md flex items-center justify-center transition-all hover:-translate-y-1 hover:shadow-xl"
+              className="w-[55vw] sm:w-[40vw] lg:w-[23%] shrink-0 snap-center lg:snap-align-start group relative h-48 bg-surface-container overflow-hidden shadow-md flex items-center justify-center transition-all hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="absolute inset-0 bg-surface-container-high transition-transform group-hover:scale-105">
                 {/* Fallback pattern if no category image exists */}
@@ -230,7 +230,7 @@ export default function HomePage() {
         </div>
         <div className="flex flex-nowrap gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-6 lg:pb-4 hide-scrollbar">
           {products.slice(1, 5).map(product => (
-            <div key={product.id} className="w-[80vw] sm:w-[45vw] lg:w-[23%] shrink-0 snap-center lg:snap-align-start">
+            <div key={product.id} className="w-[65vw] sm:w-[45vw] lg:w-[23%] shrink-0 snap-center lg:snap-align-start">
               <ProductCard
                 product={product}
                 onQuickAdd={(title) => showToast(title)}

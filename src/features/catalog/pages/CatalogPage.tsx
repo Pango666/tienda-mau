@@ -18,6 +18,7 @@ export default function CatalogPage() {
   
   const [gridCols, setGridCols] = useState<3 | 4>(3)
   const [priceMax, setPriceMax] = useState(500)
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
   const { toast, showToast, hideToast } = useToast()
 
   useEffect(() => {
@@ -147,23 +148,49 @@ export default function CatalogPage() {
 
       {/* Main Content */}
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop py-8">
+        
+        {/* Mobile filter button */}
+        <div className="lg:hidden mb-6 flex justify-between items-center bg-surface-container-low p-4 shadow-sm border border-outline-variant/20">
+           <button 
+             className="flex items-center gap-2 font-headline-sm text-body-sm font-bold uppercase text-on-surface hover:text-primary transition-colors"
+             onClick={() => setIsMobileFiltersOpen(true)}
+             type="button"
+           >
+             <span className="material-symbols-outlined">filter_list</span>
+             FILTRAR CATÁLOGO
+           </button>
+           <span className="font-label-mono text-[11px] text-primary font-bold">{filteredProducts.length} RESULTADOS</span>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-start">
           {/* Filters Sidebar */}
-          <aside className="lg:col-span-3 flex flex-col gap-6 bg-surface-container-lowest p-5">
-            <div className="flex items-center justify-between pb-3 bg-surface-container px-3 py-2">
+          <aside className={isMobileFiltersOpen ? "fixed inset-0 z-[110] overflow-y-auto bg-surface-container-lowest p-6 flex flex-col gap-6" : "hidden lg:flex lg:col-span-3 flex-col gap-6 bg-surface-container-lowest p-5"}>
+            <div className="flex items-center justify-between pb-3 bg-surface-container px-3 py-2 relative">
               <span className="font-label-mono text-label-mono text-on-surface uppercase font-bold tracking-wider">// FILTROS AVANZADOS</span>
-              <button 
-                className="font-label-mono text-[10px] text-primary hover:underline uppercase" 
-                type="button"
-                onClick={() => {
-                  setSelectedCategory(null)
-                  setPriceMax(500)
-                  setSelectedColor(null)
-                  setSelectedSize(null)
-                }}
-              >
-                LIMPIAR TODO
-              </button>
+              <div className="flex items-center gap-3">
+                <button 
+                  className="font-label-mono text-[10px] text-primary hover:underline uppercase" 
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory(null)
+                    setPriceMax(500)
+                    setSelectedColor(null)
+                    setSelectedSize(null)
+                  }}
+                >
+                  LIMPIAR TODO
+                </button>
+                {isMobileFiltersOpen && (
+                  <button 
+                    className="p-1 bg-surface-container-highest text-on-surface hover:text-primary flex items-center justify-center transition-colors"
+                    onClick={() => setIsMobileFiltersOpen(false)}
+                    type="button"
+                    aria-label="Cerrar filtros"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">close</span>
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Cap Type */}
@@ -308,6 +335,17 @@ export default function CatalogPage() {
               </div>
               <span className="material-symbols-outlined text-primary text-lg">local_shipping</span>
             </div>
+
+            {/* Mobile apply button */}
+            {isMobileFiltersOpen && (
+              <button 
+                className="w-full py-4 bg-primary-container text-on-primary-container font-headline-sm text-body-md font-bold uppercase tracking-tight hover:bg-white hover:text-surface transition-colors mt-4 sticky bottom-4 shadow-lg z-10"
+                onClick={() => setIsMobileFiltersOpen(false)}
+                type="button"
+              >
+                APLICAR {filteredProducts.length} RESULTADOS
+              </button>
+            )}
           </aside>
 
           {/* Products Grid */}

@@ -22,7 +22,7 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
-    <header className="w-full bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/30">
+    <header className="sticky top-0 z-[100] w-full bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/30">
       <div className="h-20 w-full max-w-[1440px] mx-auto px-4 md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between gap-4">
         {/* Hamburger Menu (Mobile) */}
         <button
@@ -38,7 +38,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center gap-6 shrink-0 z-50">
           <Link to="/" className="flex items-center gap-3 shrink-0">
-            <img alt="Wanted Lodge Logo" className="h-[90px] w-auto object-contain -my-4 drop-shadow-md" src={LOGO_URL} />
+            <img alt="Wanted Lodge Logo" className="h-[60px] md:h-[90px] w-auto object-contain -my-4 drop-shadow-md" src={LOGO_URL} />
           </Link>
         </div>
 
@@ -104,7 +104,14 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-surface-container-lowest flex flex-col pt-24 px-6 pb-6 xl:hidden animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="fixed inset-0 z-[110] bg-surface-container-lowest flex flex-col pt-24 px-6 pb-6 xl:hidden animate-in fade-in slide-in-from-top-4 duration-200">
+          <button
+            className="absolute top-6 right-4 p-2 text-on-surface-variant hover:text-primary transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Close Menu"
+          >
+            <span className="material-symbols-outlined text-[32px]">close</span>
+          </button>
           <nav className="flex flex-col gap-4 w-full">
             {NAV_LINKS.map(link => {
               const isActive = location.pathname === link.path

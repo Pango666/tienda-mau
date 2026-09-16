@@ -144,7 +144,7 @@ export default function ProductDetailPage() {
 
           {/* Right: Purchase Terminal */}
           <div className="lg:col-span-7 flex flex-col">
-            <div className="bg-surface-container-low p-6 md:p-8 flex flex-col gap-6">
+            <div className="bg-surface-container-low p-4 md:p-8 flex flex-col gap-5 md:gap-6">
               {/* Breadcrumbs */}
               <div className="flex items-center justify-between gap-2">
                 <nav className="flex items-center gap-1.5 font-label-mono text-[11px] text-tertiary uppercase tracking-wider flex-wrap">

@@ -12,7 +12,7 @@ const NAV_LINKS: NavLink[] = [
   { path: '/', label: 'INICIO' },
   { path: '/catalogo', label: 'CATÁLOGO' },
   { path: '/puntos-de-entrega', label: 'PUNTOS DE ENTREGA' },
-  { path: '/faq-contacto', label: 'FAQ & CONTACTO' },
+  
 ]
 
 export default function Navbar() {

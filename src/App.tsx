@@ -8,7 +8,7 @@ import HomePage from './features/catalog/pages/HomePage'
 import CatalogPage from './features/catalog/pages/CatalogPage'
 import ProductDetailPage from './features/catalog/pages/ProductDetailPage'
 import DeliveryPointsPage from './features/catalog/pages/DeliveryPointsPage'
-import FaqContactPage from './features/catalog/pages/FaqContactPage'
+
 import CheckoutPage from './features/checkout/pages/CheckoutPage'
 import AdminLoginPage from './features/admin/pages/AdminLoginPage'
 import AdminDashboardPage from './features/admin/pages/AdminDashboardPage'
@@ -27,7 +27,7 @@ function App() {
               <Route path="/catalogo" element={<CatalogPage />} />
               <Route path="/producto/:id" element={<ProductDetailPage />} />
               <Route path="/puntos-de-entrega" element={<DeliveryPointsPage />} />
-              <Route path="/faq-contacto" element={<FaqContactPage />} />
+              
               <Route path="/checkout" element={<CheckoutPage />} />
             </Route>
 

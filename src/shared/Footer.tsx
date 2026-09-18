@@ -35,7 +35,7 @@ export default function Footer() {
               // SOPORTE
             </h4>
             <ul className="space-y-2 font-label-mono text-body-sm text-on-surface-variant">
-              <li><Link to="/faq-contacto" className="hover:text-on-surface cursor-pointer">CONTACTO DIRECTO</Link></li>
+              
             </ul>
           </div>
         </div>

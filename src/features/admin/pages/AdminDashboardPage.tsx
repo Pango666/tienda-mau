@@ -150,8 +150,14 @@ export default function AdminDashboardPage() {
   }
 
   async function handleDeleteProduct(id: string) {
-    if (!confirm('¿Estás seguro de eliminar este producto?')) return
+    if (!confirm('¿Estás seguro de desactivar (eliminar) este producto?')) return
     const ok = await deleteProduct(id)
+    if (ok) await loadData()
+  }
+
+  async function handleReactivateProduct(id: string) {
+    if (!confirm('¿Estás seguro de reactivar este producto?')) return
+    const ok = await updateProduct(id, { is_active: true } as any)
     if (ok) await loadData()
   }
 
@@ -376,7 +382,10 @@ export default function AdminDashboardPage() {
                             />
                           )}
                           <div>
-                            <span className="font-headline-sm text-body-sm font-bold text-on-surface uppercase block">{product.title}</span>
+                            <span className="font-headline-sm text-body-sm font-bold text-on-surface uppercase block">
+                              {product.title}
+                              {product.is_active === false && <span className="text-error font-bold ml-2 text-[10px] bg-error/10 px-1 py-0.5 rounded-sm">(INACTIVO)</span>}
+                            </span>
                             <span className="font-label-mono text-[10px] text-on-surface-variant">
                               {product.description?.slice(0, 50) || 'Sin descripción'}
                             </span>
@@ -460,13 +469,23 @@ export default function AdminDashboardPage() {
                           >
                             <span className="material-symbols-outlined text-[18px]">edit</span>
                           </button>
-                          <button
-                            onClick={() => handleDeleteProduct(product.id)}
-                            className="p-1 text-outline hover:text-error transition-colors"
-                            title="Eliminar"
-                          >
-                            <span className="material-symbols-outlined text-[18px]">delete</span>
-                          </button>
+                          {product.is_active === false ? (
+                            <button
+                              onClick={() => handleReactivateProduct(product.id)}
+                              className="p-1 text-outline hover:text-success transition-colors"
+                              title="Reactivar Producto"
+                            >
+                              <span className="material-symbols-outlined text-[18px] text-green-500">restore</span>
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleDeleteProduct(product.id)}
+                              className="p-1 text-outline hover:text-error transition-colors"
+                              title="Desactivar (Eliminar)"
+                            >
+                              <span className="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -628,7 +647,7 @@ export default function AdminDashboardPage() {
                   className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70 resize-none"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
                   <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">MATERIAL</label>
                   <input
@@ -742,7 +761,7 @@ export default function AdminDashboardPage() {
                   className="bg-surface-container font-label-mono text-body-sm px-4 py-3 text-on-surface border border-outline-variant/40 focus:outline-none focus:border-primary-container transition-all placeholder:text-on-surface-variant/70 resize-none"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
                   <label className="font-label-mono text-label-mono uppercase text-on-surface font-bold tracking-wider">MATERIAL</label>
                   <input

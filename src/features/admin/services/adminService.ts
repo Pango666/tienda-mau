@@ -120,7 +120,7 @@ export async function updateProduct(id: string, updates: Partial<{
 export async function deleteProduct(id: string): Promise<boolean> {
   const { error } = await supabase
     .from('products')
-    .delete()
+    .update({ is_active: false })
     .eq('id', id)
 
   if (error) {

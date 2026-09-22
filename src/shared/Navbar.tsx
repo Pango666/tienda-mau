@@ -120,7 +120,7 @@ export default function Navbar() {
       )}
 
       {/* Mobile Drawer Menu */}
-      <div className={`fixed inset-y-0 left-0 z-[110] w-[85%] max-w-sm bg-surface shadow-2xl flex flex-col pt-6 px-4 pb-6 xl:hidden transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className={`fixed inset-y-0 left-0 z-[110] w-[85%] max-w-sm bg-white shadow-2xl flex flex-col pt-6 px-4 pb-6 xl:hidden transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center justify-between mb-8 px-2">
           <img alt="Wanted Lodge Logo" className="h-[35px] w-auto object-contain" src={LOGO_URL} />
           <button

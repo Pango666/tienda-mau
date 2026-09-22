@@ -42,7 +42,7 @@ export default function AdminLayout() {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed left-0 top-0 h-full w-[80%] max-w-[280px] lg:w-64 bg-surface border-r border-outline-variant/30 z-[110] lg:z-50 flex flex-col transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+      <aside className={`fixed left-0 top-0 h-full w-[80%] max-w-[280px] lg:w-64 bg-white border-r border-outline-variant/30 z-[110] lg:z-50 flex flex-col transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         {/* Logo */}
         <div className="h-20 px-6 flex items-center justify-between border-b border-outline-variant/30">
           <div className="flex items-center gap-3">

@@ -42,7 +42,7 @@ export default function AdminLayout() {
       )}
 
       {/* Sidebar */}
-      <aside className={`fixed left-0 top-0 h-full w-[80%] max-w-[280px] lg:w-64 bg-surface-container-lowest border-r border-outline-variant/30 z-[110] lg:z-50 flex flex-col transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+      <aside className={`fixed left-0 top-0 h-full w-[80%] max-w-[280px] lg:w-64 bg-surface border-r border-outline-variant/30 z-[110] lg:z-50 flex flex-col transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         {/* Logo */}
         <div className="h-20 px-6 flex items-center justify-between border-b border-outline-variant/30">
           <div className="flex items-center gap-3">
@@ -127,7 +127,7 @@ export default function AdminLayout() {
       {/* Main content area */}
       <div className="lg:pl-64 w-full">
         {/* Top header */}
-        <header className="fixed top-0 left-0 lg:left-64 right-0 h-16 md:h-20 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/30 z-40 flex items-center justify-between px-4 lg:px-8">
+        <header className="fixed top-0 left-0 lg:left-64 right-0 h-16 md:h-20 bg-surface/95 backdrop-blur-md border-b border-outline-variant/30 z-40 flex items-center justify-between px-4 lg:px-8">
           <div className="flex items-center gap-2 lg:gap-3">
             <button
               className="lg:hidden p-1 mr-2 text-on-surface-variant hover:text-primary transition-colors"
